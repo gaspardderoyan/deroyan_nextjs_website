@@ -24,9 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${libreBaskerville.className} antialiased`}>
+      <body className={`${libreBaskerville.className} antialiased bg-[#EAE8DA] min-h-screen`}>
         <Navbar />
-        <main>
+        <main className="bg-[#EAE8DA]">
           {children}
         </main>
         <Footer />

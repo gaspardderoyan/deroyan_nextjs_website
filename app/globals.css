@@ -11,6 +11,7 @@
 
 body {
   /* Font family is now handled by the Next.js font loader */
+  background-color: #EAE8DA;
 }
 
 
@@ -18,15 +19,16 @@ body {
 @layer base {
   :root {
 
-    --background: 0 0% 100%;
+    --background: 36 33% 89%;
+    /* This is #EAE8DA in hsl format */
 
     --foreground: 0 0% 3.9%;
 
-    --card: 0 0% 100%;
+    --card: 36 33% 89%;
 
     --card-foreground: 0 0% 3.9%;
 
-    --popover: 0 0% 100%;
+    --popover: 36 33% 89%;
 
     --popover-foreground: 0 0% 3.9%;
 
@@ -68,23 +70,25 @@ body {
 
     --radius: 0.5rem
   }
+
   .dark {
 
-    --background: 0 0% 3.9%;
+    --background: 36 33% 89%;
+    /* Keep the same beige in dark mode */
 
-    --foreground: 0 0% 98%;
+    --foreground: 0 0% 3.9%;
 
-    --card: 0 0% 3.9%;
+    --card: 36 33% 89%;
 
-    --card-foreground: 0 0% 98%;
+    --card-foreground: 0 0% 3.9%;
 
-    --popover: 0 0% 3.9%;
+    --popover: 36 33% 89%;
 
-    --popover-foreground: 0 0% 98%;
+    --popover-foreground: 0 0% 3.9%;
 
-    --primary: 0 0% 98%;
+    --primary: 0 0% 9%;
 
-    --primary-foreground: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 14.9%;
 
@@ -126,6 +130,7 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
