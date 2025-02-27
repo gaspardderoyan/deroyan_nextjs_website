@@ -23,7 +23,7 @@ export default async function Items({
 
   return (
     <div className="min-h-screen bg-[#EAE8DA]">
-      <div className="container mx-auto px-8 py-8">
+      <div className="container mx-auto px-12 md:px-16 lg:px-24 py-8">
         <h1 className="text-3xl font-bold mb-8">Our Collection</h1>
         
         {/* Grid of items with angular black borders */}
@@ -42,13 +42,17 @@ export default async function Items({
               >
                 <div className="relative aspect-square bg-[#EAE8DA]">
                   {image ? (
-                    <Image
-                      src={imageUrl}
-                      alt={item.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-contain p-4"
-                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="relative w-full h-full max-w-[80%] max-h-[80%]">
+                        <Image
+                          src={imageUrl}
+                          alt={item.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-contain"
+                        />
+                      </div>
+                    </div>
                   ) : (
                     <div className="flex items-center justify-center h-full">
                       <p className="text-gray-500">No image available</p>
