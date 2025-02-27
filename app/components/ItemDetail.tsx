@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { getFullImageUrl } from '@/app/lib/api';
 
 // TypeScript interfaces for the component props
 interface ImageData {
@@ -37,11 +38,8 @@ export default function ItemDetail({ item }: ItemDetailProps) {
   // Get the first image from the array (if any images exist)
   const image = item.data.images?.[0];
   
-  // Get the API URL from environment variables or use a default
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
-  
   // Build the full image URL by adding the base URL to the relative path
-  const imageUrl = image ? `${apiUrl}${image.url}` : '';
+  const imageUrl = image ? getFullImageUrl(image.url) : '';
   
   // Convert the bullet_list string into an array by splitting at newline characters
   const bulletPoints = item.data.bullet_list?.split('\n') || [];
