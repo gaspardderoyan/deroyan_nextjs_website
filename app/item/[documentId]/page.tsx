@@ -38,17 +38,9 @@ interface ApiResponse {
   meta: Record<string, unknown>; // Any metadata (using Record<string, unknown> for flexibility)
 }
 
-// This interface defines what props our page component will receive
-// In Next.js app router, pages receive route parameters automatically
-interface PageProps {
-  params: {
-    documentId: string;    // This will be the ID from the URL
-  };
-}
-
 // The main page component that displays an individual art item
 // This is an async component because it fetches data
-export default async function ItemPage({ params }: PageProps) {
+export default async function ItemPage({ params }: { params: { documentId: string } }) {
   // Ensure params.documentId is available before using it
   const { documentId } = params;
   
@@ -63,10 +55,13 @@ export default async function ItemPage({ params }: PageProps) {
 // This function handles the API request to get a single item
 // It's separated from the component for better organization
 async function fetchItem(documentId: string): Promise<ApiResponse> {
+  // Get the API URL from environment variables or use a default
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
+  
   // Make the API call using the fetch API
   // The ?populate=images part tells Strapi to include image data
   const response = await fetch(
-    `http://localhost:1337/api/carpets/${documentId}?populate=images`
+    `${apiUrl}/api/carpets/${documentId}?populate=images`
   );
   
   // Check if the request was successful

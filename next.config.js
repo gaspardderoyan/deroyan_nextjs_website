@@ -3,7 +3,7 @@
 const nextConfig = {
     /* config options here */
     images: {
-        domains: ['localhost'],
+        domains: ['localhost', 'your-production-api-domain.com'],
     },
 };
 

@@ -1,4 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Art Gallery Website
+
+This is a Next.js website for displaying art items.
+
+## Local Development
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env.local` file with the following variables:
+   ```
+   NEXT_PUBLIC_API_URL=http://localhost:1337
+   ```
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Deployment on Vercel
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Set up the following environment variables in Vercel:
+   - `NEXT_PUBLIC_API_URL`: Your production API URL
+
+## Environment Variables
+
+- `NEXT_PUBLIC_API_URL`: The base URL of your API (e.g., `http://localhost:1337` for local development or your production API URL for deployment)
+
+## Image Configuration
+
+If you're using a different domain for your images in production, make sure to update the `next.config.js` file to include that domain in the `images.domains` array.
+
+## Type Issues with Next.js 15
+
+If you encounter type errors related to page props, make sure you're using inline type definitions for page components rather than separate interfaces:
+
+```typescript
+// Use this:
+export default async function Page({ params }: { params: { id: string } }) {
+  // ...
+}
+
+// Instead of this:
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function Page({ params }: PageProps) {
+  // ...
+}
+```
 
 ## Getting Started
 
