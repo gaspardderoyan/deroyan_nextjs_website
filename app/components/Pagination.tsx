@@ -21,12 +21,12 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
   };
 
   return (
-    <div className="flex justify-center mt-8 space-x-2">
+    <div className="flex justify-center mt-8 space-x-1">
       {/* Previous page button */}
       {currentPage > 1 && (
         <Link
           href={getPageUrl(currentPage - 1)}
-          className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+          className="px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors"
         >
           Previous
         </Link>
@@ -35,10 +35,10 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
       {/* First page */}
       <Link
         href={getPageUrl(1)}
-        className={`px-4 py-2 border rounded-md ${
+        className={`px-4 py-2 border border-black ${
           currentPage === 1
-            ? 'bg-black text-white border-black'
-            : 'border-gray-300 hover:bg-gray-100'
+            ? 'bg-black text-white'
+            : 'hover:bg-black hover:text-white transition-colors'
         }`}
       >
         1
@@ -46,14 +46,14 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
       
       {/* Ellipsis for many pages */}
       {currentPage > 3 && (
-        <span className="px-4 py-2">...</span>
+        <span className="px-4 py-2 border border-black">...</span>
       )}
       
       {/* Page before current if not first or second page */}
       {currentPage > 2 && (
         <Link
           href={getPageUrl(currentPage - 1)}
-          className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+          className="px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors"
         >
           {currentPage - 1}
         </Link>
@@ -63,7 +63,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
       {currentPage !== 1 && currentPage !== totalPages && (
         <Link
           href={getPageUrl(currentPage)}
-          className="px-4 py-2 border rounded-md bg-black text-white border-black"
+          className="px-4 py-2 border border-black bg-black text-white"
         >
           {currentPage}
         </Link>
@@ -73,7 +73,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
       {currentPage < totalPages - 1 && (
         <Link
           href={getPageUrl(currentPage + 1)}
-          className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+          className="px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors"
         >
           {currentPage + 1}
         </Link>
@@ -81,17 +81,17 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
       
       {/* Ellipsis for many pages */}
       {currentPage < totalPages - 2 && (
-        <span className="px-4 py-2">...</span>
+        <span className="px-4 py-2 border border-black">...</span>
       )}
       
       {/* Last page if not the first page */}
       {totalPages > 1 && (
         <Link
           href={getPageUrl(totalPages)}
-          className={`px-4 py-2 border rounded-md ${
+          className={`px-4 py-2 border border-black ${
             currentPage === totalPages
-              ? 'bg-black text-white border-black'
-              : 'border-gray-300 hover:bg-gray-100'
+              ? 'bg-black text-white'
+              : 'hover:bg-black hover:text-white transition-colors'
           }`}
         >
           {totalPages}
@@ -102,7 +102,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
       {currentPage < totalPages && (
         <Link
           href={getPageUrl(currentPage + 1)}
-          className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+          className="px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors"
         >
           Next
         </Link>
