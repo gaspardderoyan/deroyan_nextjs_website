@@ -38,22 +38,7 @@ interface ApiResponse {
   meta: Record<string, unknown>; // Any metadata (using Record<string, unknown> for flexibility)
 }
 
-// The main page component that displays an individual art item
-// This is an async component because it fetches data
-export default async function ItemPage({ params }: { params: { documentId: string } }) {
-  // Ensure params.documentId is available before using it
-  const { documentId } = params;
-  
-  // Fetch the art item data using the documentId from the URL
-  // The await keyword pauses execution until the data is fetched
-  const item = await fetchItem(documentId);
-  
-  // Render the ItemDetail component with the fetched data
-  return <ItemDetail item={item} />;
-}
-
 // This function handles the API request to get a single item
-// It's separated from the component for better organization
 async function fetchItem(documentId: string): Promise<ApiResponse> {
   // Get the API URL from environment variables or use a default
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
@@ -72,4 +57,24 @@ async function fetchItem(documentId: string): Promise<ApiResponse> {
   
   // Parse the JSON response and return it
   return await response.json();
+}
+
+// The main page component that displays an individual art item
+// Using the generateMetadata pattern which is fully supported in Next.js
+export async function generateMetadata(props: any) {
+  return {
+    title: `Item ${props.params.documentId}`,
+  };
+}
+
+// The main page component - using a simpler approach to avoid type issues
+export default async function Page(props: any) {
+  // Extract documentId from params
+  const documentId = props.params.documentId;
+  
+  // Fetch the art item data using the documentId from the URL
+  const item = await fetchItem(documentId);
+  
+  // Render the ItemDetail component with the fetched data
+  return <ItemDetail item={item} />;
 }
