@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container mx-auto">
         <div className="flex flex-row justify-between items-start">
           <div>
-            <p className="text-xs sm:text-sm">Galerie Deroyan - 13, rue Drouot 75009 Paris</p>
+            <p className="text-xs sm:text-sm">13, rue Drouot 75009 Paris</p>
             <p className="text-xs sm:text-sm">
               Tél. : <a href="tel:+33148000785" className="underline decoration-black">01.48.00.07.85</a>
             </p>
@@ -15,7 +15,8 @@ const Footer = () => {
             </p>
           </div>
           <div className="text-xs sm:text-sm text-right">
-            <p>Deroyan 2025 © Tous droits réservés</p>
+            <p>Deroyan 2025 ©</p>
+            <p>Tous droits réservés</p>
             <p>Conception: Gaspard Deroyan</p>
           </div>
         </div>
