@@ -3,6 +3,7 @@
 
 import Image from 'next/image';
 import { getFullImageUrl } from '@/app/lib/api';
+import { useState } from 'react';
 
 // TypeScript interfaces for the component props
 interface ImageData {
@@ -38,15 +39,21 @@ interface ItemDetailProps {
 // TODO: get all of the images
 // TODO: display the non-selected images thumbnails 
 export default function ItemDetail({ item }: ItemDetailProps) {
-  // Get the first image from the array (if any images exist)
-  const image = item.data.images?.[0];
-
+  // State to track the currently selected image index
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  
   const numImages = item.data.images?.length || 0;
-  console.log("number of images", numImages);
+  
+  // Get the currently selected image (or the first one if none is selected)
+  const selectedImage = numImages > 0 ? item.data.images[selectedImageIndex] : null;
+  
   // Build the full image URL by adding the base URL to the relative path
-  const imageUrl = image ? getFullImageUrl(image.url) : '';
-  // TODO: this is for the large image
-  // const imageUrl = image ? getFullImageUrl(image.formats?.large?.url || image.url) : '';
+  const imageUrl = selectedImage ? getFullImageUrl(selectedImage.url) : '';
+  
+  // Function to handle thumbnail click
+  const handleThumbnailClick = (index: number) => {
+    setSelectedImageIndex(index);
+  };
   
   // Convert the bullet_list string into an array by splitting at newline characters
   const bulletPoints = item.data.bullet_list?.split('\n') || [];
@@ -71,28 +78,60 @@ export default function ItemDetail({ item }: ItemDetailProps) {
               rounded-lg adds rounded corners
               overflow-hidden ensures nothing spills outside the container
             */}
-            <div className="relative h-[350px] sm:h-[500px] lg:h-[650px] bg-[#EAE8DA] rounded-lg overflow-hidden">
-              {/* Only show the image if we have one */}
-              {image ? (
-                /* 
-                  Next.js Image component:
-                  - fill makes it fill the parent container
-                  - object-contain ensures the whole image is visible (no cropping)
-                  - sizes tells the browser how much space the image will take up
-                  - priority makes it load with higher priority
-                */
-                <Image 
-                  src={imageUrl}
-                  alt={item.data.title}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 50vw"
-                  className="object-contain"
-                  priority
-                />
-              ) : (
-                /* If there's no image, show this message */
-                <div className="flex items-center justify-center h-full">
-                  <p className="text-gray-500">No image available</p>
+            <div className="flex flex-col">
+              <div className="relative h-[350px] sm:h-[500px] lg:h-[650px] bg-[#EAE8DA] rounded-lg overflow-hidden">
+                {/* Only show the image if we have one */}
+                {selectedImage ? (
+                  /* 
+                    Next.js Image component:
+                    - fill makes it fill the parent container
+                    - object-contain ensures the whole image is visible (no cropping)
+                    - sizes tells the browser how much space the image will take up
+                    - priority makes it load with higher priority
+                  */
+                  <Image 
+                    src={imageUrl}
+                    alt={item.data.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 50vw"
+                    className="object-contain"
+                    priority
+                  />
+                ) : (
+                  /* If there's no image, show this message */
+                  <div className="flex items-center justify-center h-full">
+                    <p className="text-gray-500">No image available</p>
+                  </div>
+                )}
+              </div>
+              
+              {/* Thumbnails row - only show if there's more than one image */}
+              {numImages > 1 && (
+                <div className="flex flex-row gap-2 mt-4 overflow-x-auto justify-center">
+                  {item.data.images.map((img, index) => {
+                    // Get the thumbnail URL or fallback to the original URL
+                    const thumbUrl = getFullImageUrl(img.formats?.thumbnail?.url || img.url);
+                    
+                    return (
+                      <div 
+                        key={img.id} 
+                        className={`
+                          relative h-16 w-16 flex-shrink-0 cursor-pointer 
+                          border-2 rounded overflow-hidden
+                          ${index === selectedImageIndex ? 'opacity-60 border-black' : 'border-transparent hover:border-gray-300'}
+                        `}
+                        onClick={() => handleThumbnailClick(index)}
+                      >
+                        <Image
+                          src={thumbUrl}
+                          alt={`Thumbnail ${index + 1}`}
+                          fill
+                          sizes="64px"
+                          className="object-cover"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
