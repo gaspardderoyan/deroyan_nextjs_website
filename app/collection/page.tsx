@@ -38,7 +38,7 @@ export default async function Items({
             
             return (
               <Link 
-                href={`/item/${item.documentId}`} 
+                href={`/collection/${item.documentId}`} 
                 key={item.id}
                 className="border-r border-b border-black hover:opacity-90 transition-opacity"
               >
@@ -71,7 +71,7 @@ export default async function Items({
           currentPage={currentPage} 
           totalPages={totalPages} 
           pageSize={currentPageSize} 
-          basePath="/item"
+          basePath="/collection"
         />
       </div>
     </div>
