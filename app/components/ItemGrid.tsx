@@ -28,6 +28,7 @@ interface ArtItem {
   bullet_list: string;
   type: string;
   images: ImageData[];
+  slug: string;
 }
 
 interface ItemGridProps {
@@ -88,7 +89,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
   };
 
   // Function to handle click/touch
-  const handleClick = (e: React.MouseEvent, id: number, documentId: string) => {
+  const handleClick = (e: React.MouseEvent, id: number, slug: string) => {
     e.preventDefault();
     e.stopPropagation(); // Stop event from bubbling up to document
     
@@ -96,7 +97,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
     if (hasTouchRef.current) {
       // If this item is already touched, navigate to its page
       if (touchedItemId === id) {
-        router.push(`/collection/${documentId}`);
+        router.push(`/collection/${slug}`);
         return;
       }
       
@@ -104,7 +105,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
       setTouchedItemId(id);
     } else {
       // For mouse devices, navigate directly
-      router.push(`/collection/${documentId}`);
+      router.push(`/collection/${slug}`);
     }
   };
 
@@ -136,7 +137,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
             className="border-r border-b border-black relative cursor-pointer grid-item touch-manipulation"
             onMouseEnter={() => handleMouseEnter(item.id)}
             onMouseLeave={handleMouseLeave}
-            onClick={(e) => handleClick(e, item.id, item.documentId)}
+            onClick={(e) => handleClick(e, item.id, item.slug)}
             onTouchStart={handleTouchStart}
           >
             <div className="relative aspect-square">

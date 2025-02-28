@@ -21,6 +21,7 @@ interface ArtItem {
   bullet_list: string;
   type: string;
   images: ImageData[];
+  slug: string;
 }
 
 // Interface for the paginated response from Strapi
@@ -96,19 +97,19 @@ export async function fetchItems(
 }
 
 /**
- * Fetches a single item by its documentId from the Strapi API
- * @param documentId - The documentId of the item to fetch
- * @returns A promise that resolves to the single item API response
+ * Fetches a single item by its slug from the Strapi API
+ * @param slug - The slug of the item to fetch
+ * @returns A promise that resolves to the paginated API response (which should contain 0 or 1 items)
  */
-export async function fetchItem(documentId: string): Promise<SingleItemApiResponse> {
+export async function fetchItem(slug: string): Promise<PaginatedApiResponse> {
   // Get the API URL from environment variables or use a default
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
   
   // Make the API call using the fetch API
   // The ?populate=images part tells Strapi to include image data
   const response = await fetch(
-    `${apiUrl}/api/carpets/${documentId}?populate=images`,
-    { next: { revalidate: 3600 } } // Cache for 1 hour (optional)
+    `${apiUrl}/api/carpets?filters[slug][$eq]=${slug}&populate=images`,
+    // { next: { revalidate: 3600 } } // Cache for 1 hour (optional)
   );
   
   // Check if the request was successful

@@ -34,11 +34,12 @@ interface ArtItem {
   bullet_list: string;
   type: string;
   images: ImageData[];
+  slug: string;
 }
 
 interface ItemDetailProps {
   item: {
-    data: ArtItem;
+    data: ArtItem | null;
   };
 }
 
@@ -47,6 +48,16 @@ interface ItemDetailProps {
 export default function ItemDetail({ item }: ItemDetailProps) {
   // State to track the currently selected image index
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  
+  // If no item data, show a message
+  if (!item.data) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-2xl font-bold mb-4">Item Not Found</h1>
+        <p>Sorry, we couldn&apos;t find the item you&apos;re looking for.</p>
+      </div>
+    );
+  }
   
   const numImages = item.data.images?.length || 0;
   
