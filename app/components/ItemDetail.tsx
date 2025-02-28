@@ -4,6 +4,12 @@
 import Image from 'next/image';
 import { getFullImageUrl } from '@/app/lib/api';
 import { useState } from 'react';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogTrigger,
+  DialogTitle 
+} from '@/components/ui/dialog';
 
 // TypeScript interfaces for the component props
 interface ImageData {
@@ -83,20 +89,38 @@ export default function ItemDetail({ item }: ItemDetailProps) {
                 {/* Only show the image if we have one */}
                 {selectedImage ? (
                   /* 
-                    Next.js Image component:
-                    - fill makes it fill the parent container
-                    - object-contain ensures the whole image is visible (no cropping)
-                    - sizes tells the browser how much space the image will take up
-                    - priority makes it load with higher priority
+                    Wrap the image in a Dialog component for zoomable view
+                    The Dialog is triggered by clicking on the image
                   */
-                  <Image 
-                    src={imageUrl}
-                    alt={item.data.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 50vw"
-                    className="object-contain"
-                    priority
-                  />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div className="relative w-full h-full cursor-zoom-in">
+                        <Image 
+                          src={imageUrl}
+                          alt={item.data.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 50vw"
+                          className="object-contain"
+                          priority
+                        />
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-7xl border-0 bg-transparent p-0">
+                      {/* Adding DialogTitle for accessibility, with sr-only to hide it visually */}
+                      <DialogTitle className="sr-only">
+                        {item.data.title}
+                      </DialogTitle>
+                      <div className="relative h-[calc(100vh-220px)] w-full overflow-clip rounded-md bg-transparent shadow-md">
+                        <Image 
+                          src={imageUrl}
+                          alt={item.data.title}
+                          fill
+                          className="h-full w-full object-contain"
+                          priority
+                        />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 ) : (
                   /* If there's no image, show this message */
                   <div className="flex items-center justify-center h-full">
