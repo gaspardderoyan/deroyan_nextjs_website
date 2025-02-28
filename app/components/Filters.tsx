@@ -12,20 +12,20 @@ import {
 
 // Define the filter options
 const typeOptions = [
-  { value: "all", label: "Tous les types" },
+  { value: "all", label: "Type" },
   { value: "carpet", label: "Tapis" },
   { value: "tapestry", label: "Tapisseries" },
   { value: "textile", label: "Textiles" },
 ];
 
 const regionOptions = [
-  { value: "all", label: "Toutes les régions" },
+  { value: "all", label: "Région" },
   { value: "europe", label: "Europe" },
   { value: "orient", label: "Orient" },
 ];
 
 const periodOptions = [
-  { value: "all", label: "Toutes les périodes" },
+  { value: "all", label: "Période" },
   { value: "th15", label: "XVème" },
   { value: "th16", label: "XVIème" },
   { value: "th17", label: "XVIIème" },
@@ -98,9 +98,9 @@ export default function Filters() {
   }, [searchParams]);
   
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-6">
+    <div className="flex flex-col md:flex-row items-end gap-4 mb-6">
       {/* Type filter */}
-      <div className="w-full md:w-auto">
+      <div className="w-full md:w-auto ">
         <Select value={type} onValueChange={handleTypeChange}>
           <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue placeholder="Type" />
