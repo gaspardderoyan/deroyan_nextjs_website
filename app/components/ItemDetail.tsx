@@ -71,7 +71,7 @@ export default function ItemDetail({ item }: ItemDetailProps) {
         {/* Wrapper div for both columns */}
         <div className="flex flex-col lg:flex-row w-full">
           {/* Left column - Image */}
-          <div className="w-full lg:w-1/2 pt-8 pb-8 sm:pb-12 lg:pb-16 pr-0 lg:pr-6">
+          <div className="w-full lg:w-1/2 pt-8 pb-8 sm:pb-12 lg:pb-8 pr-0 lg:pr-6">
             {/* 
               Fixed height container for the image
               bg-gray-100 gives a light background
@@ -138,7 +138,7 @@ export default function ItemDetail({ item }: ItemDetailProps) {
           </div>
 
           {/* Right column - Item details */}
-          <div className="w-full lg:w-1/2 lg:border-l lg:border-black pl-0 lg:pl-8 pt-6 lg:pt-8 pb-8 sm:pb-12 lg:pb-16">
+          <div className="w-full lg:w-1/2 lg:border-l lg:border-black pl-0 lg:pl-8 pt-6 lg:pt-8 pb-8 sm:pb-12 lg:pb-8">
             {/* Title of the art piece */}
             <h1 className="text-2xl font-bold mb-6">{item.data.title}</h1>
             
