@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { getFullImageUrl } from '@/app/lib/api';
@@ -38,30 +38,31 @@ export default function ItemGrid({ items }: ItemGridProps) {
   const [hoveredItemId, setHoveredItemId] = useState<number | null>(null);
   const [touchedItemId, setTouchedItemId] = useState<number | null>(null);
   const router = useRouter();
-  const [isMobile, setIsMobile] = useState(false);
+  const hasTouchRef = useRef(false);
 
-  // Effect to detect mobile devices
+  // Effect to detect touch devices
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+    // Check if device supports touch events
+    const detectTouch = () => {
+      hasTouchRef.current = true;
+      // Remove listener once detected
+      window.removeEventListener('touchstart', detectTouch);
     };
     
-    // Check initially
-    checkMobile();
+    window.addEventListener('touchstart', detectTouch, { once: true });
     
-    // Add event listener for window resize
-    window.addEventListener('resize', checkMobile);
-    
-    // Clean up
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('touchstart', detectTouch);
     };
   }, []);
 
   // Effect to reset touchedItemId when clicking elsewhere on the page
   useEffect(() => {
-    const handleClickOutside = () => {
-      setTouchedItemId(null);
+    const handleClickOutside = (e: MouseEvent) => {
+      // Only reset if the click is outside our grid items
+      if (!(e.target as Element).closest('.grid-item')) {
+        setTouchedItemId(null);
+      }
     };
 
     // Add event listener to document
@@ -75,16 +76,15 @@ export default function ItemGrid({ items }: ItemGridProps) {
 
   // Function to handle mouse enter
   const handleMouseEnter = (id: number) => {
-    if (!isMobile) {
+    // Only set hover state on non-touch devices
+    if (!hasTouchRef.current) {
       setHoveredItemId(id);
     }
   };
 
   // Function to handle mouse leave
   const handleMouseLeave = () => {
-    if (!isMobile) {
-      setHoveredItemId(null);
-    }
+    setHoveredItemId(null);
   };
 
   // Function to handle click/touch
@@ -92,17 +92,27 @@ export default function ItemGrid({ items }: ItemGridProps) {
     e.preventDefault();
     e.stopPropagation(); // Stop event from bubbling up to document
     
-    if (isMobile) {
-      // On mobile: first tap shows info, second tap navigates
+    // For touch devices, use the two-tap pattern
+    if (hasTouchRef.current) {
+      // If this item is already touched, navigate to its page
       if (touchedItemId === id) {
         router.push(`/collection/${documentId}`);
-      } else {
-        setTouchedItemId(id);
+        return;
       }
+      
+      // First tap: show the overlay
+      setTouchedItemId(id);
     } else {
-      // On desktop: always navigate on click
+      // For mouse devices, navigate directly
       router.push(`/collection/${documentId}`);
     }
+  };
+
+  // Function to handle touch start (for mobile)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.stopPropagation();
+    // Mark as touch device
+    hasTouchRef.current = true;
   };
 
   return (
@@ -118,15 +128,16 @@ export default function ItemGrid({ items }: ItemGridProps) {
         const bulletPoints = item.bullet_list?.split('\n') || [];
         
         // Check if this item is being hovered or touched
-        const isActive = isMobile ? touchedItemId === item.id : hoveredItemId === item.id;
+        const isActive = hoveredItemId === item.id || touchedItemId === item.id;
         
         return (
           <div 
             key={item.id}
-            className="border-r border-b border-black relative cursor-pointer"
+            className="border-r border-b border-black relative cursor-pointer grid-item touch-manipulation"
             onMouseEnter={() => handleMouseEnter(item.id)}
             onMouseLeave={handleMouseLeave}
             onClick={(e) => handleClick(e, item.id, item.documentId)}
+            onTouchStart={handleTouchStart}
           >
             <div className="relative aspect-square">
               {image ? (

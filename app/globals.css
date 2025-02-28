@@ -14,7 +14,11 @@ body {
   background-color: #EAE8DA;
 }
 
-
+/* Custom utility classes */
+.touch-manipulation {
+  touch-action: manipulation;
+  /* Prevents double-tap to zoom and other browser gestures */
+}
 
 @layer base {
   :root {
