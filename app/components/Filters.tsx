@@ -98,7 +98,7 @@ export default function Filters() {
   }, [searchParams]);
   
   return (
-    <div className="flex flex-col md:flex-row items-end gap-4 mb-6">
+    <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-6 md:mb-0 md:pt-2">
       {/* Type filter */}
       <div className="w-full md:w-auto ">
         <Select value={type} onValueChange={handleTypeChange}>
@@ -116,7 +116,7 @@ export default function Filters() {
       </div>
       
       {/* Region filter */}
-      <div className="w-full md:w-auto">
+      <div className="w-full md:w-auto ">
         <Select value={region} onValueChange={handleRegionChange}>
           <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue placeholder="Région" />
@@ -132,7 +132,7 @@ export default function Filters() {
       </div>
       
       {/* Period filter */}
-      <div className="w-full md:w-auto">
+      <div className="w-full md:w-auto ">
         <Select value={period} onValueChange={handlePeriodChange}>
           <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue placeholder="Période" />
