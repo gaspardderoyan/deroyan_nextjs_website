@@ -3,6 +3,7 @@
 // Import the ItemDetail component
 import ItemDetail from '@/app/components/ItemDetail';
 import { fetchItem } from '@/app/lib/api';
+import ScrollToTop from '@/app/components/ScrollToTop';
 
 // Define the type for page params
 interface PageParams {
@@ -30,5 +31,10 @@ export default async function Page({ params }: PageParams) {
   const item = await fetchItem(documentId);
   
   // Render the ItemDetail component with the fetched data
-  return <ItemDetail item={item} />;
+  // Wrap with ScrollToTop component to ensure page scrolls to top on load
+  return (
+    <ScrollToTop>
+      <ItemDetail item={item} />
+    </ScrollToTop>
+  );
 }
