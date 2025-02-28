@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center px-2 sm:px-6 py-4 bg-[#EAE8DA] border-b border-black relative min-h-[50px] sm:min-h-[80px]">
+    <nav className="flex items-center px-4 sm:px-6 py-4 bg-[#EAE8DA] border-b border-black relative min-h-[50px] sm:min-h-[80px]">
       {/* Logo on the left */}
       <div className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2">
         <Link href="/">
@@ -23,7 +23,7 @@ const Navbar = () => {
           Collection
         </Link>
         <Link href="/about" className="text-gray-800 hover:text-gray-600 transition-colors text-sm sm:text-base">
-          A propos
+          À propos
         </Link>
       </div>
     </nav>
