@@ -37,8 +37,8 @@ interface PaginatedApiResponse {
   };
 }
 
-// Interface for a single item response from Strapi
-interface SingleItemApiResponse {
+// Note: This interface is currently not used but kept for potential future use
+export interface SingleItemApiResponse {
   data: ArtItem;
   meta: Record<string, unknown>;
 }
