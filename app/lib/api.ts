@@ -43,19 +43,45 @@ interface SingleItemApiResponse {
 }
 
 /**
+ * Interface for filter parameters
+ */
+interface FilterParams {
+  type?: string;
+  region?: string;
+  period?: string;
+  [key: string]: string | undefined;
+}
+
+/**
  * Fetches multiple items with pagination from the Strapi API
  * @param page - The page number to fetch (default: 1)
  * @param pageSize - The number of items per page (default: 10)
+ * @param filters - Optional filter parameters for type, region, and period
  * @returns A promise that resolves to the paginated API response
  */
-export async function fetchItems(page: number = 1, pageSize: number = 10): Promise<PaginatedApiResponse> {
+export async function fetchItems(
+  page: number = 1, 
+  pageSize: number = 10,
+  filters?: FilterParams
+): Promise<PaginatedApiResponse> {
   // Get the API URL from environment variables or use a default
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
   
-  // Make the API call using the fetch API with pagination parameters
-  // The ?populate=images part tells Strapi to include image data
+  // Build the query string with pagination parameters
+  let queryString = `populate=images&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
+  
+  // Add filter parameters if provided
+  if (filters) {
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) {
+        queryString += `&${key}=${encodeURIComponent(value)}`;
+      }
+    });
+  }
+  
+  // Make the API call using the fetch API with pagination and filter parameters
   const response = await fetch(
-    `${apiUrl}/api/carpets?populate=images&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
+    `${apiUrl}/api/carpets?${queryString}`,
     { next: { revalidate: 3600 } } // Cache for 1 hour (optional)
   );
   

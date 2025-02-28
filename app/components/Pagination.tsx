@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
   currentPage: number;
@@ -10,14 +11,25 @@ interface PaginationProps {
 }
 
 export default function Pagination({ currentPage, totalPages, pageSize, basePath }: PaginationProps) {
+  // Get current search parameters to preserve filters when navigating
+  const searchParams = useSearchParams();
+  
   // If there's only one page, don't show pagination
   if (totalPages <= 1) {
     return null;
   }
 
-  // Function to generate the URL for a specific page
+  // Function to generate the URL for a specific page while preserving other query parameters
   const getPageUrl = (page: number) => {
-    return `${basePath}?page=${page}&pageSize=${pageSize}`;
+    // Create a new URLSearchParams object from the current search params
+    const params = new URLSearchParams(searchParams.toString());
+    
+    // Update the page and pageSize parameters
+    params.set('page', page.toString());
+    params.set('pageSize', pageSize.toString());
+    
+    // Return the URL with all parameters
+    return `${basePath}?${params.toString()}`;
   };
 
   return (
