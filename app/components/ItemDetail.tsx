@@ -1,4 +1,5 @@
 'use client';
+// TODO: does this need to be a client component?
 
 import Image from 'next/image';
 import { getFullImageUrl } from '@/app/lib/api';
@@ -34,12 +35,18 @@ interface ItemDetailProps {
   };
 }
 
+// TODO: get all of the images
+// TODO: display the non-selected images thumbnails 
 export default function ItemDetail({ item }: ItemDetailProps) {
   // Get the first image from the array (if any images exist)
   const image = item.data.images?.[0];
-  
+
+  const numImages = item.data.images?.length || 0;
+  console.log("number of images", numImages);
   // Build the full image URL by adding the base URL to the relative path
   const imageUrl = image ? getFullImageUrl(image.url) : '';
+  // TODO: this is for the large image
+  // const imageUrl = image ? getFullImageUrl(image.formats?.large?.url || image.url) : '';
   
   // Convert the bullet_list string into an array by splitting at newline characters
   const bulletPoints = item.data.bullet_list?.split('\n') || [];
