@@ -23,7 +23,7 @@ const Navbar = () => {
           Accueil
         </Link>
         <Link href="/collection" className="text-gray-800 hover:text-gray-600 transition-colors text-sm sm:text-base">
-          Collections
+          Collection
         </Link>
       </div>
     </nav>

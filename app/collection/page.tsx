@@ -25,7 +25,7 @@ export default async function Items({
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-12 md:px-16 lg:px-24 py-8">
-        <h1 className="text-3xl font-bold mb-8">Our Collection</h1>
+        <h1 className="text-3xl font-bold mb-8">Notre collection</h1>
         
         {/* Use the new ItemGrid component */}
         <ItemGrid items={result.data} />
