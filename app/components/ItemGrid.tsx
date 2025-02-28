@@ -38,6 +38,25 @@ export default function ItemGrid({ items }: ItemGridProps) {
   const [hoveredItemId, setHoveredItemId] = useState<number | null>(null);
   const [touchedItemId, setTouchedItemId] = useState<number | null>(null);
   const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Effect to detect mobile devices
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+    };
+    
+    // Check initially
+    checkMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   // Effect to reset touchedItemId when clicking elsewhere on the page
   useEffect(() => {
@@ -56,27 +75,34 @@ export default function ItemGrid({ items }: ItemGridProps) {
 
   // Function to handle mouse enter
   const handleMouseEnter = (id: number) => {
-    setHoveredItemId(id);
+    if (!isMobile) {
+      setHoveredItemId(id);
+    }
   };
 
   // Function to handle mouse leave
   const handleMouseLeave = () => {
-    setHoveredItemId(null);
+    if (!isMobile) {
+      setHoveredItemId(null);
+    }
   };
 
-  // Function to handle touch on mobile
-  const handleTouch = (e: React.MouseEvent, id: number, documentId: string) => {
+  // Function to handle click/touch
+  const handleClick = (e: React.MouseEvent, id: number, documentId: string) => {
     e.preventDefault();
     e.stopPropagation(); // Stop event from bubbling up to document
     
-    // If this item is already touched, navigate to its page
-    if (touchedItemId === id) {
+    if (isMobile) {
+      // On mobile: first tap shows info, second tap navigates
+      if (touchedItemId === id) {
+        router.push(`/collection/${documentId}`);
+      } else {
+        setTouchedItemId(id);
+      }
+    } else {
+      // On desktop: always navigate on click
       router.push(`/collection/${documentId}`);
-      return;
     }
-    
-    // Otherwise, just show the overlay
-    setTouchedItemId(id);
   };
 
   return (
@@ -92,7 +118,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
         const bulletPoints = item.bullet_list?.split('\n') || [];
         
         // Check if this item is being hovered or touched
-        const isActive = hoveredItemId === item.id || touchedItemId === item.id;
+        const isActive = isMobile ? touchedItemId === item.id : hoveredItemId === item.id;
         
         return (
           <div 
@@ -100,7 +126,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
             className="border-r border-b border-black relative cursor-pointer"
             onMouseEnter={() => handleMouseEnter(item.id)}
             onMouseLeave={handleMouseLeave}
-            onClick={(e) => handleTouch(e, item.id, item.documentId)}
+            onClick={(e) => handleClick(e, item.id, item.documentId)}
           >
             <div className="relative aspect-square">
               {image ? (
