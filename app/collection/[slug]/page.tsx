@@ -2,7 +2,7 @@
 
 // Import the ItemDetail component
 import ItemDetail from '@/app/components/ItemDetail';
-import { fetchItem } from '@/app/lib/api';
+import { fetchItem, fetchAllItemSlugs } from '@/app/lib/api';
 import ScrollToTop from '@/app/components/ScrollToTop';
 import { notFound } from 'next/navigation';
 
@@ -13,13 +13,60 @@ interface PageParams {
   }>;
 }
 
+/**
+ * Generate static params for all item detail pages at build time
+ * This function is called during build to pre-render all item pages
+ */
+export async function generateStaticParams() {
+  try {
+    // Fetch all item slugs
+    const slugs = await fetchAllItemSlugs();
+    
+    if (slugs.length === 0) {
+      console.warn('Warning: No item slugs were fetched for static generation. Check your API connection.');
+    } else {
+      console.log(`Generating static params for ${slugs.length} items`);
+    }
+    
+    // Return an array of objects with the slug parameter
+    return slugs.map(slug => ({
+      slug,
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    // Return an empty array to avoid build failure
+    // The pages will be generated on-demand instead
+    return [];
+  }
+}
+
 // The main page component that displays an individual art item
 // Using the generateMetadata pattern which is fully supported in Next.js
 export async function generateMetadata({ params }: PageParams) {
   // Await the params before accessing its properties
   const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+  
+  // Fetch the item data to get the title
+  try {
+    const response = await fetchItem(slug);
+    
+    // If item exists, use its title for the metadata
+    if (response.data.length > 0) {
+      const item = response.data[0];
+      return {
+        title: item.title,
+        description: item.description || `Détails de ${item.title}`,
+      };
+    }
+  } catch (error) {
+    console.error(`Error fetching metadata for item ${slug}:`, error);
+  }
+  
+  // Fallback if item not found or error occurred
   return {
-    title: `Item ${resolvedParams.slug}`,
+    title: `Item ${slug}`,
+    description: 'Détails de l\'item',
   };
 }
 

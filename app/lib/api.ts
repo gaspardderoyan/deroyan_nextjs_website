@@ -27,10 +27,14 @@ export async function fetchItems(
     });
   }
   
+  // Create a cache tag that includes the page, pageSize, and filters
+  const filterString = filters ? Object.entries(filters).map(([k, v]) => `${k}=${v}`).join('-') : '';
+  const cacheTag = `items-page-${page}-size-${pageSize}${filterString ? `-${filterString}` : ''}`;
+  
   // Make the API call using the fetch API with pagination and filter parameters
   const response = await fetch(
     `${apiUrl}/api/carpets?${queryString}`,
-    { next: { revalidate: 3600 } } // Cache for 1 hour (optional)
+    { next: { revalidate: 3600, tags: ['items-collection', cacheTag] } } // Cache for 1 hour with tags
   );
   
   // Check if the request was successful
@@ -56,7 +60,7 @@ export async function fetchItem(slug: string): Promise<PaginatedApiResponse> {
   // The ?populate=images part tells Strapi to include image data
   const response = await fetch(
     `${apiUrl}/api/carpets?filters[slug][$eq]=${slug}&populate=images`,
-    // { next: { revalidate: 3600 } } // Cache for 1 hour (optional)
+    { next: { revalidate: 3600, tags: [`item-${slug}`] } } // Cache for 1 hour and add a tag for targeted revalidation
   );
   
   // Check if the request was successful
@@ -102,7 +106,8 @@ export async function getUIElements(): Promise<Record<string, string>> {
     // Fetch UI elements from the API
     const response = await fetch(`${apiUrl}/api/ui-elements?populate=*`, {
       next: { 
-        // Cache the response until manually invalidated
+        // Cache the response with revalidation
+        revalidate: 3600,
         tags: ['ui-elements'] 
       }
     });
@@ -127,5 +132,82 @@ export async function getUIElements(): Promise<Record<string, string>> {
     console.error("Error fetching UI elements:", error);
     // Return empty object in case of error
     return {};
+  }
+}
+
+/**
+ * Fetches all item slugs for static generation
+ * This function is meant to be used during build time to generate static pages
+ * @returns A promise that resolves to an array of all item slugs
+ */
+export async function fetchAllItemSlugs(): Promise<string[]> {
+  try {
+    // Get the API URL from environment variables or use a default
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
+    
+    // Array to store all slugs
+    let allSlugs: string[] = [];
+    
+    // Start with page 1
+    let currentPage = 1;
+    let totalPages = 1;
+    const pageSize = 100; // Fetch 100 items per page for efficiency
+    
+    // Helper function to add a delay between requests
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+    
+    // First request to get the first page and determine total pages
+    const firstPageUrl = `${apiUrl}/api/carpets?fields[0]=slug&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}`;
+    console.log(`Fetching page ${currentPage} of items...`);
+    
+    const firstResponse = await fetch(
+      firstPageUrl,
+      { next: { tags: ['items-collection'] } }
+    );
+    
+    if (!firstResponse.ok) {
+      throw new Error(`Failed to fetch item slugs: ${firstResponse.status}`);
+    }
+    
+    const firstResult: PaginatedApiResponse = await firstResponse.json();
+    
+    // Extract slugs from the first page
+    const firstPageSlugs = firstResult.data.map(item => item.slug);
+    allSlugs = [...allSlugs, ...firstPageSlugs];
+    
+    // Get total pages from the pagination metadata
+    totalPages = firstResult.meta.pagination.pageCount;
+    console.log(`Found ${totalPages} total pages of items`);
+    
+    // Fetch remaining pages if there are more than one
+    for (currentPage = 2; currentPage <= totalPages; currentPage++) {
+      console.log(`Fetching page ${currentPage} of ${totalPages}...`);
+      
+      // Add a small delay between requests to avoid rate limiting
+      await delay(300);
+      
+      const pageUrl = `${apiUrl}/api/carpets?fields[0]=slug&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}`;
+      
+      const response = await fetch(
+        pageUrl,
+        { next: { tags: ['items-collection'] } }
+      );
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch item slugs for page ${currentPage}: ${response.status}`);
+      }
+      
+      const result: PaginatedApiResponse = await response.json();
+      
+      // Extract slugs from this page and add to the array
+      const pageSlugs = result.data.map(item => item.slug);
+      allSlugs = [...allSlugs, ...pageSlugs];
+    }
+    
+    console.log(`Successfully fetched all ${allSlugs.length} item slugs`);
+    return allSlugs;
+  } catch (error) {
+    console.error("Error fetching item slugs:", error);
+    return [];
   }
 } 
