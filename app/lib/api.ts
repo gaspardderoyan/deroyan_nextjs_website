@@ -100,13 +100,13 @@ export function getFullImageUrl(imagePath: string): string {
  * This function is meant to be used during build time
  * TODO: setup the locale to be passed in as a parameter, and fetch the correct locale
  */
-export async function getUIElements(): Promise<Record<string, string>> {
+export async function getUIElements(locale: string = 'fr'): Promise<Record<string, string>> {
   try {
     // Get the API URL from environment variables or use a default
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
     
     // Fetch UI elements from the API
-    const response = await fetch(`${apiUrl}/api/ui-elements?populate=*`, {
+    const response = await fetch(`${apiUrl}/api/ui-elements?pagination[page]=1&pagination[pageSize]=100&locale=${locale}`, {
       next: { 
         // Cache the response with revalidation
         revalidate: 3600,
@@ -119,6 +119,11 @@ export async function getUIElements(): Promise<Record<string, string>> {
     }
 
     const data: UIElementsResponse = await response.json();
+
+    // if data.data is empty, return an empty object
+    if (data.data.length === 0) {
+      return {};
+    }
     
     // Transform the response into a key-value map for easier access
     // Using French locale by default

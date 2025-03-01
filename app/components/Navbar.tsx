@@ -9,7 +9,7 @@ import LanguageToggle from './LanguageToggle';
  */
 export async function Navbar() {
   // Fetch UI elements at build time
-  const uiElements = await getUIElements();
+  const uiElements = await getUIElements('fr');
   
   // Use the fetched values or fallback to defaults if API call fails
   const collectionText = uiElements['navbar.collection'] || 'Collection';

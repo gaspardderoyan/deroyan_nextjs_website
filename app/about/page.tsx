@@ -6,7 +6,7 @@ import { getUIElements } from '@/app/lib/api';
  */
 export default async function AboutPage() {
   // Fetch UI elements at build time (could be expanded to include about page content)
-  const uiElements = await getUIElements();
+  const uiElements = await getUIElements('fr');
   
   // Use the fetched value or fallback to a default
   const aboutTitle = uiElements['about.title'] || 'À propos de la Galerie';
