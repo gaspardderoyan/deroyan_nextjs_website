@@ -50,17 +50,25 @@ export default async function Items({
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-12 md:px-16 lg:px-24 py-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-          <h1 className="text-3xl font-bold mb-4 md:mb-0">Notre collection</h1>
-          
-          {/* Add the Filters component */}
-          <Filters />
+        {/* Header section with responsive layout */}
+        <div className="mb-6">
+          {/* On desktop: h1 and filters side by side */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">Notre collection</h1>
+              
+              {/* Display the total number of items found */}
+              <p className="text-gray-600 mb-4 lg:mb-0">
+                {pagination.total} {pagination.total === 1 ? 'objet trouvé' : 'objets trouvés'}
+              </p>
+            </div>
+            
+            {/* Filters - full width on mobile/tablet, aligned right on desktop */}
+            <div className="w-full lg:w-auto">
+              <Filters />
+            </div>
+          </div>
         </div>
-        
-        {/* Display the total number of items found */}
-        <p className="text-gray-600 mb-6">
-          {pagination.total} {pagination.total === 1 ? 'objet trouvé' : 'objets trouvés'}
-        </p>
         
         {/* Use the ItemGrid component */}
         <ItemGrid items={result.data} />

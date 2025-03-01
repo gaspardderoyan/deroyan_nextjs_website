@@ -98,11 +98,11 @@ export default function Filters() {
   }, [searchParams]);
   
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-6 md:mb-0 md:pt-2">
+    <div className="flex flex-row flex-wrap gap-3 w-full lg:justify-end">
       {/* Type filter */}
-      <div className="w-full md:w-auto ">
+      <div className="flex-1 min-w-[120px] max-w-[180px]">
         <Select value={type} onValueChange={handleTypeChange}>
-          <SelectTrigger className="w-full md:w-[180px]">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Type" />
           </SelectTrigger>
           <SelectContent>
@@ -116,9 +116,9 @@ export default function Filters() {
       </div>
       
       {/* Region filter */}
-      <div className="w-full md:w-auto ">
+      <div className="flex-1 min-w-[120px] max-w-[180px]">
         <Select value={region} onValueChange={handleRegionChange}>
-          <SelectTrigger className="w-full md:w-[180px]">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Région" />
           </SelectTrigger>
           <SelectContent>
@@ -132,9 +132,9 @@ export default function Filters() {
       </div>
       
       {/* Period filter */}
-      <div className="w-full md:w-auto ">
+      <div className="flex-1 min-w-[120px] max-w-[180px]">
         <Select value={period} onValueChange={handlePeriodChange}>
-          <SelectTrigger className="w-full md:w-[180px]">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Période" />
           </SelectTrigger>
           <SelectContent>
