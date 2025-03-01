@@ -83,7 +83,6 @@ export function calculateTotalPages(totalItems: number, itemsPerPage: number): n
   return Math.ceil(totalItems / itemsPerPage);
 }
 
-// TODO: add parameter to get different sizes of images
 /**
  * Gets the full image URL by combining the API URL with the image path
  * @param imagePath - The relative path to the image
