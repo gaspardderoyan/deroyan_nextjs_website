@@ -1,57 +1,4 @@
-// TypeScript interfaces for the API response
-interface ImageData {
-  id: number;
-  documentId: string;
-  name: string;
-  width: number;
-  height: number;
-  url: string;
-  formats: {
-    thumbnail?: { url: string; width: number; height: number };
-    small?: { url: string; width: number; height: number };
-    medium?: { url: string; width: number; height: number };
-  };
-}
-
-interface ArtItem {
-  id: number;
-  documentId: string;
-  title: string;
-  description: string | null;
-  bullet_list: string;
-  type: string;
-  images: ImageData[];
-  slug: string;
-}
-
-// Interface for the paginated response from Strapi
-interface PaginatedApiResponse {
-  data: ArtItem[];
-  meta: {
-    pagination: {
-      page: number;      // Current page
-      pageSize: number;  // Items per page
-      pageCount: number; // Total number of pages
-      total: number;     // Total number of items
-    };
-  };
-}
-
-// Note: This interface is currently not used but kept for potential future use
-export interface SingleItemApiResponse {
-  data: ArtItem;
-  meta: Record<string, unknown>;
-}
-
-/**
- * Interface for filter parameters
- */
-interface FilterParams {
-  type?: string;
-  region?: string;
-  period?: string;
-  [key: string]: string | undefined;
-}
+import { PaginatedApiResponse, FilterParams, UIElementsResponse } from '@/app/types';
 
 /**
  * Fetches multiple items with pagination from the Strapi API
@@ -141,4 +88,44 @@ export function calculateTotalPages(totalItems: number, itemsPerPage: number): n
 export function getFullImageUrl(imagePath: string): string {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
   return `${apiUrl}${imagePath}`;
+}
+
+/**
+ * Fetches UI elements from the API
+ * This function is meant to be used during build time
+ */
+export async function getUIElements(): Promise<Record<string, string>> {
+  try {
+    // Get the API URL from environment variables or use a default
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
+    
+    // Fetch UI elements from the API
+    const response = await fetch(`${apiUrl}/api/ui-elements?populate=*`, {
+      next: { 
+        // Cache the response until manually invalidated
+        tags: ['ui-elements'] 
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch UI elements: ${response.status}`);
+    }
+
+    const data: UIElementsResponse = await response.json();
+    
+    // Transform the response into a key-value map for easier access
+    // Using French locale by default
+    const uiElements: Record<string, string> = {};
+    
+    data.data.forEach((element) => {
+      // Use the key as the property name and the value as the property value
+      uiElements[element.key] = element.value;
+    });
+
+    return uiElements;
+  } catch (error) {
+    console.error("Error fetching UI elements:", error);
+    // Return empty object in case of error
+    return {};
+  }
 } 

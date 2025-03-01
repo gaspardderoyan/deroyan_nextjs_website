@@ -4,33 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { getFullImageUrl } from '@/app/lib/api';
+import { ArtItem } from '@/app/types';
 
 // TypeScript interfaces for the component props
-interface ImageData {
-  id: number;
-  documentId: string;
-  name: string;
-  width: number;
-  height: number;
-  url: string;
-  formats: {
-    thumbnail?: { url: string; width: number; height: number };
-    small?: { url: string; width: number; height: number };
-    medium?: { url: string; width: number; height: number };
-  };
-}
-
-interface ArtItem {
-  id: number;
-  documentId: string;
-  title: string;
-  description: string | null;
-  bullet_list: string;
-  type: string;
-  images: ImageData[];
-  slug: string;
-}
-
 interface ItemGridProps {
   items: ArtItem[];
 }
