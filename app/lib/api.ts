@@ -6,6 +6,7 @@ import { PaginatedApiResponse, FilterParams, UIElementsResponse } from '@/app/ty
  * @param pageSize - The number of items per page (default: 10)
  * @param filters - Optional filter parameters for type, region, and period
  * @returns A promise that resolves to the paginated API response
+ * TODO: setup the locale to be passed in as a parameter, and fetch the correct locale
  */
 export async function fetchItems(
   page: number = 1, 
@@ -51,6 +52,7 @@ export async function fetchItems(
  * Fetches a single item by its slug from the Strapi API
  * @param slug - The slug of the item to fetch
  * @returns A promise that resolves to the paginated API response (which should contain 0 or 1 items)
+ * TODO: setup the locale to be passed in as a parameter, and fetch the correct locale
  */
 export async function fetchItem(slug: string): Promise<PaginatedApiResponse> {
   // Get the API URL from environment variables or use a default
@@ -96,6 +98,7 @@ export function getFullImageUrl(imagePath: string): string {
 /**
  * Fetches UI elements from the API
  * This function is meant to be used during build time
+ * TODO: setup the locale to be passed in as a parameter, and fetch the correct locale
  */
 export async function getUIElements(): Promise<Record<string, string>> {
   try {
