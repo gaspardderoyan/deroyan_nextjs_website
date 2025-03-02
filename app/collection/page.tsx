@@ -65,6 +65,9 @@ export default async function Items({
             
             {/* Filters - full width on mobile/tablet, aligned right on desktop */}
             <div className="w-full lg:w-auto">
+              {/* Filters component 
+              TODO: use generateStaticParams and pass the correct text for the filters
+              */}
               <Filters />
             </div>
           </div>
