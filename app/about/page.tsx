@@ -9,7 +9,7 @@ export default async function AboutPage() {
   const uiElements = await getUIElements('fr');
   
   // Use the fetched value or fallback to a default
-  const aboutTitle = uiElements['about.title'] || 'À propos de la Galerie';
+  const aboutTitle = uiElements['about.title'] || 'Failed to fetch';
   
   return (
     <div className="container mx-auto px-4 py-12">

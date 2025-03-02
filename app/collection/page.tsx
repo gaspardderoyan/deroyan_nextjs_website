@@ -1,8 +1,50 @@
 // page to show all items, with pagination
 import Pagination from '@/app/components/Pagination';
 import ItemGrid from '@/app/components/ItemGrid';
-import { fetchItems } from '@/app/lib/api';
+import { fetchItems, getUIElements } from '@/app/lib/api';
 import Filters from '@/app/components/Filters';
+
+const filterOptions = {
+  'type': ['all', 'carpet', 'tapestry', 'textile'],
+  'region': ['all', 'europe', 'orient'],
+  'period': ['all', 'th15', 'th16', 'th17', 'th18', 'th19', 'th20']
+};
+
+// generate static params for the filters
+export async function generateStaticParams() {
+  // Fetch UI elements for both languages and create filter options in one go
+  const [frUIElements, enUIElements] = await Promise.all([
+    getUIElements('fr'),
+    getUIElements('en')
+  ]);
+  
+  // Helper function to create filter options for a given language and UI elements
+  const createFilterOptions = (uiElements: Record<string, string>) => {
+    // Create an object to store all filter options
+    const options: Record<string, Array<{ value: string, label: string }>> = {};
+    
+    // Loop through each filter category (type, region, period)
+    Object.entries(filterOptions).forEach(([category, values]) => {
+      // Create the category key with the proper naming convention (e.g., typeOptions)
+      const optionKey = `${category}Options`;
+      
+      // Map the values to objects with value and localized label
+      options[optionKey] = values.map(option => ({
+        value: option,
+        label: uiElements[`filter.${category}.${option}`] || 'not found'
+      }));
+    });
+    
+    return options;
+  };
+  
+  // Create options for both languages using the helper function
+  const fr = createFilterOptions(frUIElements);
+  const en = createFilterOptions(enUIElements);
+  
+  // Return options organized by locale
+  return { fr, en };
+}
 
 // The Items component that displays a grid of items with pagination
 export default async function Items({
