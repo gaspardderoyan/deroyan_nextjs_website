@@ -50,11 +50,9 @@ export default async function Items({
   const { pagination } = result.meta;
   const totalPages = pagination.pageCount;
 
-  // fetch the UI elements text for the pagination
+  // fetch the UI elements text
   const UIElementsFrPagination = await getUIElements('fr', 'pagination');
-
   const UIElementsFrFilters = await getUIElements('fr', 'filter');
-  console.log(UIElementsFrFilters);
 
   return (
     <div className="min-h-screen">
