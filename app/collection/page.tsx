@@ -53,6 +53,9 @@ export default async function Items({
   // fetch the UI elements text for the pagination
   const UIElementsFrPagination = await getUIElements('fr', 'pagination');
 
+  const UIElementsFrFilters = await getUIElements('fr', 'filter');
+  console.log(UIElementsFrFilters);
+
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-12 md:px-16 lg:px-24 py-8">
@@ -74,7 +77,7 @@ export default async function Items({
               {/* Filters component 
               TODO: use generateStaticParams and pass the correct text for the filters
               */}
-              <Filters />
+              <Filters UIElementsFrFilters={UIElementsFrFilters} />
             </div>
           </div>
         </div>

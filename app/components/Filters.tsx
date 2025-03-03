@@ -43,7 +43,7 @@ const SELECT_ITEM_STYLES = "relative flex w-full cursor-default select-none item
  * Filters component for filtering the collection by type, region, and period
  * Maintains filter state in URL parameters for shareable links and browser history
  */
-export default function Filters() {
+export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: Map<string, string> }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -159,7 +159,7 @@ export default function Filters() {
                         <Check className="h-4 w-4" />
                       </SelectPrimitive.ItemIndicator>
                     </span>
-                    <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>
+                    <SelectPrimitive.ItemText>{UIElementsFrFilters.get(`filter.region.${option.value}`) || 'fail'}</SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
