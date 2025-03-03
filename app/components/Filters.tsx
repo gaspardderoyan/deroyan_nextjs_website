@@ -127,7 +127,7 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
                         <Check className="h-4 w-4" />
                       </SelectPrimitive.ItemIndicator>
                     </span>
-                    <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>
+                    <SelectPrimitive.ItemText>{UIElementsFrFilters.get(`filter.type.${option.value}`) || 'fail'}</SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
@@ -191,7 +191,7 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
                         <Check className="h-4 w-4" />
                       </SelectPrimitive.ItemIndicator>
                     </span>
-                    <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>
+                    <SelectPrimitive.ItemText>{UIElementsFrFilters.get(`filter.period.${option.value}`) || 'fail'}</SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
