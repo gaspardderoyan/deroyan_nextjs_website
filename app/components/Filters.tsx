@@ -6,29 +6,38 @@ import { useCallback, useEffect, useState } from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
 
-// Define the filter options
-const typeOptions = [
-  { value: "all", label: "Type" },
-  { value: "carpet", label: "Tapis" },
-  { value: "tapestry", label: "Tapisseries" },
-  { value: "textile", label: "Textiles" },
-];
-
-const regionOptions = [
-  { value: "all", label: "Région" },
-  { value: "europe", label: "Europe" },
-  { value: "orient", label: "Orient" },
-];
-
-const periodOptions = [
-  { value: "all", label: "Période" },
-  { value: "th15", label: "XVème" },
-  { value: "th16", label: "XVIème" },
-  { value: "th17", label: "XVIIème" },
-  { value: "th18", label: "XVIIIème" },
-  { value: "th19", label: "XIXème" },
-  { value: "th20", label: "XXème" },
-];
+// Define all filter options in a single object 
+// Each category has its own array of options
+// Access using filterOptions.type, filterOptions.region, or filterOptions.period
+// Each value is used as both a key for retrieval and as the actual filter value
+// The UI text is retrieved from the UIElementsFrFilters Map using these values as keys
+const filterOptions = {
+  // Type filter options
+  type: [
+    "all",    // Default option
+    "carpet", // Tapis
+    "tapestry", // Tapisseries
+    "textile",  // Textiles
+  ],
+  
+  // Region filter options
+  region: [
+    "all",    // Default option
+    "europe", // Europe
+    "orient", // Orient
+  ],
+  
+  // Period filter options
+  period: [
+    "all",  // Default option
+    "th15", // XVème
+    "th16", // XVIème
+    "th17", // XVIIème
+    "th18", // XVIIIème
+    "th19", // XIXème
+    "th20", // XXème
+  ]
+};
 
 // Define shared select styling constants
 const SELECT_TRIGGER_STYLES = "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-none border border-black bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-0 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1";
@@ -116,10 +125,11 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
           <SelectPrimitive.Portal>
             <SelectPrimitive.Content className={SELECT_CONTENT_STYLES} position="popper">
               <SelectPrimitive.Viewport className={SELECT_VIEWPORT_STYLES}>
-                {typeOptions.map((option) => (
+                {/* Map directly through string array, using each value as both key and filter value */}
+                {filterOptions.type.map((value) => (
                   <SelectPrimitive.Item 
-                    key={option.value} 
-                    value={option.value}
+                    key={value} 
+                    value={value}
                     className={SELECT_ITEM_STYLES}
                   >
                     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -127,7 +137,9 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
                         <Check className="h-4 w-4" />
                       </SelectPrimitive.ItemIndicator>
                     </span>
-                    <SelectPrimitive.ItemText>{UIElementsFrFilters.get(`filter.type.${option.value}`) || 'fail'}</SelectPrimitive.ItemText>
+                    <SelectPrimitive.ItemText>
+                      {UIElementsFrFilters.get(`filter.type.${value}`) || 'fail'}
+                    </SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
@@ -148,10 +160,11 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
           <SelectPrimitive.Portal>
             <SelectPrimitive.Content className={SELECT_CONTENT_STYLES} position="popper">
               <SelectPrimitive.Viewport className={SELECT_VIEWPORT_STYLES}>
-                {regionOptions.map((option) => (
+                {/* Map directly through string array, using each value as both key and filter value */}
+                {filterOptions.region.map((value) => (
                   <SelectPrimitive.Item 
-                    key={option.value} 
-                    value={option.value}
+                    key={value} 
+                    value={value}
                     className={SELECT_ITEM_STYLES}
                   >
                     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -159,7 +172,9 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
                         <Check className="h-4 w-4" />
                       </SelectPrimitive.ItemIndicator>
                     </span>
-                    <SelectPrimitive.ItemText>{UIElementsFrFilters.get(`filter.region.${option.value}`) || 'fail'}</SelectPrimitive.ItemText>
+                    <SelectPrimitive.ItemText>
+                      {UIElementsFrFilters.get(`filter.region.${value}`) || 'fail'}
+                    </SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
@@ -180,10 +195,11 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
           <SelectPrimitive.Portal>
             <SelectPrimitive.Content className={SELECT_CONTENT_STYLES} position="popper">
               <SelectPrimitive.Viewport className={SELECT_VIEWPORT_STYLES}>
-                {periodOptions.map((option) => (
+                {/* Map directly through string array, using each value as both key and filter value */}
+                {filterOptions.period.map((value) => (
                   <SelectPrimitive.Item 
-                    key={option.value} 
-                    value={option.value}
+                    key={value} 
+                    value={value}
                     className={SELECT_ITEM_STYLES}
                   >
                     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -191,7 +207,9 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
                         <Check className="h-4 w-4" />
                       </SelectPrimitive.ItemIndicator>
                     </span>
-                    <SelectPrimitive.ItemText>{UIElementsFrFilters.get(`filter.period.${option.value}`) || 'fail'}</SelectPrimitive.ItemText>
+                    <SelectPrimitive.ItemText>
+                      {UIElementsFrFilters.get(`filter.period.${value}`) || 'fail'}
+                    </SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
