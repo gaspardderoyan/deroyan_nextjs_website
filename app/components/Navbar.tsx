@@ -9,12 +9,13 @@ import LanguageToggle from './LanguageToggle';
  */
 export async function Navbar() {
   // Fetch UI elements at build time
-  const uiElements = await getUIElements('fr');
+  const uiElementsFr = await getUIElements('fr');
+  const uiElementsEn = await getUIElements('en');
   
   // Use the fetched values or fallback to defaults if API call fails
-  const collectionText = uiElements['navbar.collection'] || 'Collection';
-  const aboutText = uiElements['navbar.about'] || 'À propos';
-  const contactText = uiElements['navbar.contact'] || 'Contact';
+  const collectionText = uiElementsFr.get('navbar.collection') || 'Not found';
+  const aboutText = uiElementsFr.get('navbar.about') || 'Not found';
+  const contactText = uiElementsFr.get('navbar.contact') || 'Not found';
 
   return (
     <nav className="flex items-center px-4 lg:px-6 py-4 bg-[#EAE8DA] border-b border-black relative min-h-[50px] lg:min-h-[80px]">

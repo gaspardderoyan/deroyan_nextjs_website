@@ -8,9 +8,10 @@ interface PaginationProps {
   totalPages: number;
   pageSize: number;
   basePath: string;
+  UIElementsFrPagination: Map<string, string>;
 }
 
-export default function Pagination({ currentPage, totalPages, pageSize, basePath }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, pageSize, basePath, UIElementsFrPagination }: PaginationProps) {
   // Get current search parameters to preserve filters when navigating
   const searchParams = useSearchParams();
   
@@ -50,7 +51,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
           aria-label="Previous page"
           prefetch={true}
         >
-          Prev
+          {UIElementsFrPagination.get('pagination.prev')}
         </Link>
       )}
       
@@ -129,7 +130,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
           aria-label="Next page"
           prefetch={true}
         >
-          Next
+          {UIElementsFrPagination.get('pagination.next')}
         </Link>
       )}
     </div>

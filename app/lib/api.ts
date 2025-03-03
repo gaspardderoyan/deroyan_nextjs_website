@@ -1,4 +1,4 @@
-import { PaginatedApiResponse, FilterParams, UIElementsResponse } from '@/app/types';
+import { PaginatedApiResponse, FilterParams } from '@/app/types';
 
 /**
  * Fetches multiple items with pagination from the Strapi API
@@ -95,50 +95,55 @@ export function getFullImageUrl(imagePath: string): string {
   return `${apiUrl}${imagePath}`;
 }
 
+interface UIElement {
+  key: string;
+  value: string;
+}
+
+interface UIElementsResponse {
+  data: UIElement[];
+}
+  
+
 /**
  * Fetches UI elements from the API
  * This function is meant to be used during build time
  * TODO: setup the locale to be passed in as a parameter, and fetch the correct locale
  */
-export async function getUIElements(locale: string = 'fr'): Promise<Record<string, string>> {
+export async function getUIElements(
+  locale: string = 'fr',
+  startsWith: string = ''
+): Promise<Map<string, string>> {
   try {
     // Get the API URL from environment variables or use a default
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
-    
-    // Fetch UI elements from the API
-    const response = await fetch(`${apiUrl}/api/ui-elements?pagination[page]=1&pagination[pageSize]=100&locale=${locale}`, {
-      next: { 
-        // Cache the response with revalidation
-        revalidate: 3600,
-        tags: ['ui-elements'] 
-      }
-    });
 
+    // Construct the API endpoint URL
+    const endpoint = `${apiUrl}/api/ui-elements?locale=${locale}${startsWith ? `&filters[key][$startsWith]=${startsWith}` : ''}`;
+
+    // Fetch data from the API
+    const response = await fetch(endpoint);
+
+    // Check if the response is OK
     if (!response.ok) {
       throw new Error(`Failed to fetch UI elements: ${response.status}`);
     }
 
-    const data: UIElementsResponse = await response.json();
+    // Parse the response as JSON
+    const jsonResponse: UIElementsResponse = await response.json();
 
-    // if data.data is empty, return an empty object
-    if (data.data.length === 0) {
-      return {};
-    }
-    
-    // Transform the response into a key-value map for easier access
-    // Using French locale by default
-    const uiElements: Record<string, string> = {};
-    
-    data.data.forEach((element) => {
-      // Use the key as the property name and the value as the property value
-      uiElements[element.key] = element.value;
+    // Create a map to store the UI elements
+    const uiElementsMap = new Map<string, string>();
+
+    // Transform the response into a Map<string, string>
+    jsonResponse.data.forEach((element) => {
+      uiElementsMap.set(element.key, element.value);
     });
 
-    return uiElements;
+    return uiElementsMap;
   } catch (error) {
     console.error("Error fetching UI elements:", error);
-    // Return empty object in case of error
-    return {};
+    return new Map<string, string>();
   }
 }
 
