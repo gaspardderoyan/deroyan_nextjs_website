@@ -69,7 +69,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
           <Link 
             key={item.id}
             href={`/collection/${item.slug}`}
-            className="border-r border-b border-black relative cursor-pointer grid-item touch-manipulation hover:bg-black/5 transition-colors duration-200 group"
+            className="border-r border-b border-black relative cursor-pointer grid-item touch-manipulation"
           >
             {/* Square aspect ratio container for consistent cell dimensions */}
             <div className="relative aspect-square flex flex-col">
@@ -110,7 +110,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
               {/* - px-4 adds horizontal padding to prevent text from touching the edges */}
               {/* - py-4 adds equal vertical padding for better spacing */}
               {/* - bg-[hsl(53,28%,93%)] sets the background color to the specified HSL value */}
-              <div className="flex items-center justify-center py-4 text-center px-4 bg-[hsl(53,28%,92%)] group-hover:bg-black/5 transition-colors duration-200">
+              <div className="flex items-center justify-center py-4 text-center px-4 bg-[hsl(53,28%,92%)]">
                 <h2 className="font-medium truncate">{formatTitle(item.title)}</h2>
               </div>
             </div>
