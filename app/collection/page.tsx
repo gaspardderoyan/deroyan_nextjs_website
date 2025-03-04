@@ -1,3 +1,4 @@
+// app/collection/page.tsx
 // page to show all items, with pagination
 import Pagination from '@/app/components/Pagination';
 import ItemGrid from '@/app/components/ItemGrid';
@@ -72,9 +73,7 @@ export default async function Items({
             
             {/* Filters - full width on mobile/tablet, aligned right on desktop */}
             <div className="w-full lg:w-auto">
-              {/* Filters component 
-              TODO: use generateStaticParams and pass the correct text for the filters
-              */}
+              {/* Filters component */}
               <Filters UIElementsFrFilters={UIElementsFrFilters} />
             </div>
           </div>

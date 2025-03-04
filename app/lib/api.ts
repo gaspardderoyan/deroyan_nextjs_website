@@ -1,4 +1,67 @@
-import { PaginatedApiResponse, FilterParams } from '@/app/types';
+import { ArtItem } from '@/app/lib';
+
+/**
+ * Interface for the paginated response from Strapi API
+ * Contains the data array and pagination metadata
+ */
+interface PaginatedApiResponse {
+  data: ArtItem[];
+  meta: {
+    pagination: {
+      page: number;      // Current page
+      pageSize: number;  // Items per page
+      pageCount: number; // Total number of pages
+      total: number;     // Total number of items
+    };
+  };
+}
+
+
+/**
+ * Interface for filter parameters used in API requests
+ */
+interface FilterParams {
+  type?: string;
+  region?: string;
+  period?: string;
+  [key: string]: string | undefined;
+}
+
+/**
+ * Interface representing a UI element from the Strapi API
+ * Contains information about a UI text element including its key, value, and localizations
+ */
+interface UIElement {
+  id: number;
+  documentId: string;
+  key: string;
+  description: null | string;
+  value: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  locale: string;
+  localizations: UIElement[];
+}
+
+/**
+ * Interface for the UI elements response from Strapi API
+ * Contains the data array of UI elements and pagination metadata
+ */
+interface UIElementsResponse {
+  data: UIElement[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+} 
+
+
+
 
 /**
  * Fetches multiple items with pagination from the Strapi API

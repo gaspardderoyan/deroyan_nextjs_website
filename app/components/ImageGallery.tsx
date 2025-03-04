@@ -7,8 +7,8 @@ import {
   DialogContent, 
   DialogTrigger,
   DialogTitle 
-} from '@/components/ui/dialog';
-import { ImageData } from '@/app/types';
+} from '@/app/lib/dialog';
+import { ImageData } from '@/app/lib';
 import { getFullImageUrl } from '@/app/lib/api';
 
 /**

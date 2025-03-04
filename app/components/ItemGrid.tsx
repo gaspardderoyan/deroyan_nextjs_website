@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { getFullImageUrl } from '@/app/lib/api';
-import { ArtItem } from '@/app/types';
+import { ArtItem } from '@/app/lib';
 
 // TypeScript interfaces for the component props
 interface ItemGridProps {

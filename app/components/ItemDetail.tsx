@@ -1,7 +1,7 @@
 // Server component for displaying item details
 // The client-side interactivity is delegated to the ImageGallery component
 
-import { ArtItem } from '@/app/types';
+import { ArtItem } from '@/app/lib';
 import ImageGallery from './ImageGallery';
 
 // TypeScript interfaces for the component props
