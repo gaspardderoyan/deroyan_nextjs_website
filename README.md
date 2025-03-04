@@ -13,6 +13,7 @@
 - [ ] Implement localization with next-intl
   - [ ] Single call to the API for all the UIElements, in both languages
   - [ ] Function to get the correct UIElements based on part of the UI and the locale
+  - [ ] Which method is best for SEO?
 - [ ] Home Page
   - [ ] How to parse the markdown content fetched from the API ?
   - [ ] Component to display a few items from the collection, maybe randomly + a link to the full collection
