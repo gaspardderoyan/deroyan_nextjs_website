@@ -61,6 +61,11 @@ export default function ItemGrid({ items }: ItemGridProps) {
         const imageUrl = image ? 
           getFullImageUrl(image.formats?.medium?.url || image.url) : '';
         
+        // Extract the first bullet point from bullet_list if available
+        const bulletPoints = item.bullet_list?.split('\n') || [];
+        // Use the first bullet point as alt text, or fall back to item title if no bullet points
+        const altText = bulletPoints.length > 0 ? bulletPoints[0] : item.title;
+        
         return (
           // Link wrapper makes the entire grid cell clickable
           // - Each cell navigates to the detail page for this item
@@ -88,7 +93,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
                     {/* - fill makes the image fill its parent container */}
                     <Image
                       src={imageUrl}
-                      alt={item.title}
+                      alt={altText}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-contain"
