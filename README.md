@@ -11,6 +11,7 @@
   - [ ] Generate the pages for the 3 main types statically
   - [ ] Fix the single item when 2 wide
   - [ ] add the seo metadata
+  - [ ] use smaller images? maybe depending on the screen size?
 - [ ] Implement localization with next-intl
   - [ ] Single call to the API for all the UIElements, in both languages
   - [ ] Function to get the correct UIElements based on part of the UI and the locale
@@ -21,6 +22,7 @@
 - [ ] Item Page
   - [ ] make the footer be on the bottom of the page, ie. expand the page to leave just enough space for the footer
   - [ ] Add the SEO metadata
+- [ ] Make the UI elements fetching at build time
 
 ## Learn
 
