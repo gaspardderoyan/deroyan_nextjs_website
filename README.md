@@ -9,7 +9,7 @@
   - [x] Switch to using <Link> instead of the router ? Will it preload the page inside/images?
   - [ ] Add an animation when loading the images
   - [ ] Generate the pages for the 3 main types statically
-  - [ ] Fix the single item when 2 wide
+  - [x] Fix the single item when 2 wide
   - [ ] add the seo metadata
   - [ ] use smaller images? maybe depending on the screen size?
 - [ ] Implement localization with next-intl

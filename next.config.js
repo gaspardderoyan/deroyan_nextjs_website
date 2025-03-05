@@ -31,6 +31,27 @@ const nextConfig = {
         // your project has ESLint errors.
         ignoreDuringBuilds: true,
     },
+    async redirects() {
+        return [
+            {
+                source: '/tapis',
+                destination: '/collection?filters[type][$eq]=carpet',
+                permanent: true,
+            },
+            {
+                source: '/tapisseries',
+                destination: '/collection?filters[type][$eq]=tapestry',
+                permanent: true,
+            },
+            {
+                source: '/autres-textiles',
+                destination: '/collection?filters[type][$eq]=textiles',
+                permanent: true,
+            },
+            // TODO: add redirects for the english(en) versions of the pages
+
+        ];
+    },
 };
 
 module.exports = nextConfig; 
