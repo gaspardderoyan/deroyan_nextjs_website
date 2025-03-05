@@ -51,9 +51,9 @@ function formatTitle(text: string): string {
 export default function ItemGrid({ items }: ItemGridProps) {
   return (
     // Main grid container with responsive columns
-    // - 1 column on mobile, 2 on medium screens, 3 on large screens
+    // - 1 column on mobile and medium screens, 3 on large screens
     // - Border styling creates a grid outline effect with borders on top and left
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-black">
+    <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 border-t border-l border-black">
       {items.map((item) => {
         // Get the first image or undefined
         const image = item.images?.[0];

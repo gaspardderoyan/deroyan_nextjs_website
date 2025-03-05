@@ -22,7 +22,7 @@ export default async function Items({
   // In Next.js 14/15, searchParams is a Promise that must be awaited
   const params = await searchParams;
   const currentPage = typeof params.page === 'string' ? parseInt(params.page) : 1;
-  const currentPageSize = typeof params.pageSize === 'string' ? parseInt(params.pageSize) : 15;
+  const currentPageSize = typeof params.pageSize === 'string' ? parseInt(params.pageSize) : 39;
   
   // Extract filter parameters
   const filters: Record<string, string> = {};
