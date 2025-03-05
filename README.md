@@ -34,3 +34,4 @@
 - [ ] Python script to generate SEO for each item w/ LLM
 - [ ] Remove the white background from the images
 - [ ] Hide the 'email' using HTML encoding
+- [ ] fix the texts for the items

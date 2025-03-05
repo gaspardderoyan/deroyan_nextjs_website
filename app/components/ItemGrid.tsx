@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { getFullImageUrl } from '@/app/lib/api';
 import { ArtItem } from '@/app/lib';
+import ImageWithLoading from '@/app/components/ImageWithLoading';
 
 // TypeScript interfaces for the component props
 interface ItemGridProps {
@@ -59,7 +59,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
         const image = item.images?.[0];
         // Build the full image URL if an image exists
         const imageUrl = image ? 
-          getFullImageUrl(image.formats?.medium?.url || image.url) : '';
+          getFullImageUrl(image.formats?.small?.url || image.url) : '';
         
         // Extract the first bullet point from bullet_list if available
         const bulletPoints = item.bullet_list?.split('\n') || [];
@@ -80,25 +80,11 @@ export default function ItemGrid({ items }: ItemGridProps) {
             <div className="relative aspect-square flex flex-col">
               {image ? (
                 // Centering container for the image
-                // - absolute positioning with inset-0 makes it fill the parent
+                // - relative positioning with flex-1 to allow space for title
                 // - flex centering ensures the image is perfectly centered
-                // - Changed from absolute to relative positioning with flex-1 to allow space for title
                 <div className="relative flex-1 flex items-center justify-center">
-                  {/* Constraining container that limits image to 75% of cell size to make room for title */}
-                  {/* This creates consistent padding around all images */}
-                  <div className="relative w-full h-full max-w-[75%] max-h-[75%]">
-                    {/* Next.js Image component with fill layout */}
-                    {/* - object-contain ensures the image maintains its aspect ratio */}
-                    {/* - sizes attribute optimizes responsive image loading */}
-                    {/* - fill makes the image fill its parent container */}
-                    <Image
-                      src={imageUrl}
-                      alt={altText}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-contain"
-                    />
-                  </div>
+                  {/* Using the separate client component for image loading */}
+                  <ImageWithLoading src={imageUrl} alt={altText} />
                 </div>
               ) : (
                 // Fallback display when no image is available
