@@ -116,7 +116,11 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
       {/* Type filter */}
       <div className="flex-1 min-w-[120px] max-w-[180px]">
         <SelectPrimitive.Root value={type} onValueChange={handleTypeChange}>
-          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES}>
+          {/*
+          aria-label is used to make the filter accessible 
+          TODO: make the label localizable, for this one and the other filters
+          */}
+          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label="Type filter">
             <SelectPrimitive.Value placeholder="Type" />
             <SelectPrimitive.Icon asChild>
               <ChevronDown className="h-4 w-4 opacity-50" />
@@ -151,7 +155,7 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
       {/* Region filter */}
       <div className="flex-1 min-w-[120px] max-w-[180px]">
         <SelectPrimitive.Root value={region} onValueChange={handleRegionChange}>
-          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES}>
+          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label="Region filter">
             <SelectPrimitive.Value placeholder="Région" />
             <SelectPrimitive.Icon asChild>
               <ChevronDown className="h-4 w-4 opacity-50" />
@@ -186,7 +190,7 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
       {/* Period filter */}
       <div className="flex-1 min-w-[120px] max-w-[180px]">
         <SelectPrimitive.Root value={period} onValueChange={handlePeriodChange}>
-          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES}>
+          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label="Period filter">
             <SelectPrimitive.Value placeholder="Période" />
             <SelectPrimitive.Icon asChild>
               <ChevronDown className="h-4 w-4 opacity-50" />
