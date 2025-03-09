@@ -16,22 +16,25 @@ export const metadata: Metadata = {
   // TODO: make this based on the locale
   description: "Galerie Deroyan, une galerie de tapis et textiles d'art ancien.",
 };
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params: { locale }
+  params
 }: Readonly<{
   children: React.ReactNode;
   params: { locale: string };
 }>) {
+  // Await the params object before destructuring
+  const awaitedParams = await params;
+  const validLocale = awaitedParams.locale;
+  
   return (
-    <html lang={locale}>
+    <html lang={validLocale}>
       <body className={`${libreBaskerville.className} antialiased bg-[#EAE8DA] min-h-screen`}>
-        <Navbar params={{ locale }} />
+        <Navbar params={{ locale: validLocale }} />
         <main className="bg-[#EAE8DA]">
           {children}
         </main>
-        <Footer params={{ locale }} />
+        <Footer params={{ locale: validLocale }} />
       </body>
     </html>
   );

@@ -15,7 +15,7 @@ export async function Navbar({
 }) {
   // Fetch UI elements at build time
   const data: LocalizedTranslations = await getLocalizedTranslations();
-  const { locale } = params;
+  const { locale } = await params;
 
   // ensure we use a valid locale
   const validLocale = validateLocale(locale);

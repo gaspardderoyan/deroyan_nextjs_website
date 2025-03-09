@@ -24,7 +24,6 @@ interface FilterParams {
   type?: string;
   region?: string;
   period?: string;
-  [key: string]: string | undefined;
 }
 
 /**
@@ -73,7 +72,7 @@ interface UIElementsResponse {
  */
 export async function fetchItems(
   page: number = 1, 
-  pageSize: number = 10,
+  pageSize: number = 39,
   filters?: FilterParams
 ): Promise<PaginatedApiResponse> {
   // Get the API URL from environment variables or use a default
@@ -92,13 +91,13 @@ export async function fetchItems(
   }
   
   // Create a cache tag that includes the page, pageSize, and filters
-  const filterString = filters ? Object.entries(filters).map(([k, v]) => `${k}=${v}`).join('-') : '';
-  const cacheTag = `items-page-${page}-size-${pageSize}${filterString ? `-${filterString}` : ''}`;
+  // const filterString = filters ? Object.entries(filters).map(([k, v]) => `${k}=${v}`).join('-') : '';
+  // const cacheTag = `items-page-${page}-size-${pageSize}${filterString ? `-${filterString}` : ''}`;
   
   // Make the API call using the fetch API with pagination and filter parameters
   const response = await fetch(
     `${apiUrl}/api/carpets?${queryString}`,
-    { next: { revalidate: 3600, tags: ['items-collection', cacheTag] } } // Cache for 1 hour with tags
+    // { next: { revalidate: 3600, tags: ['items-collection', cacheTag] } } // Cache for 1 hour with tags
   );
   
   // Check if the request was successful

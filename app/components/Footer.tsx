@@ -8,7 +8,7 @@ export default async function Footer({
 }) {  
   // fetch the UI elements text
   const data: LocalizedTranslations = await getLocalizedTranslations();
-  const { locale } = params;
+  const { locale } = await params;
 
   // ensure we use a valid locale
   const validLocale = validateLocale(locale);

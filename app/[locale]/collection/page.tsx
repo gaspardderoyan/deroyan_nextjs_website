@@ -55,7 +55,7 @@ export default async function Items({
   const totalPages = pagination.pageCount;
 
 
-  const { locale } = params;
+  const { locale } = await params;
 
   // ensure we use a valid locale
   const validLocale = validateLocale(locale);
