@@ -2,13 +2,15 @@
 // page to show all items, with pagination
 import Pagination from '@/app/components/Pagination';
 import ItemGrid from '@/app/components/ItemGrid';
-import { fetchItems, getUIElements } from '@/app/lib/api';
 import Filters from '@/app/components/Filters';
-
+import { fetchItems } from '@/app/lib/api';
+import { getLocalizedTranslations, LocalizedTranslations } from '@/app/lib/UI_api';
+import { validateLocale } from '@/app/lib/i18n';
 
 // The Items component that displays a grid of items with pagination
 export default async function Items({
   searchParams,
+  params
 }: {
   searchParams: Promise<{ 
     page?: string; 
@@ -17,29 +19,30 @@ export default async function Items({
     'filters[region][$eq]'?: string;
     'filters[period][$eq]'?: string;
   }>;
+  params: { locale: string }
 }) {
   // Get page, pageSize, and filter parameters from URL query parameters or use defaults
   // In Next.js 14/15, searchParams is a Promise that must be awaited
-  const params = await searchParams;
-  const currentPage = typeof params.page === 'string' ? parseInt(params.page) : 1;
-  const currentPageSize = typeof params.pageSize === 'string' ? parseInt(params.pageSize) : 39;
+  const resolvedSearchParams = await searchParams;
+  const currentPage = typeof resolvedSearchParams.page === 'string' ? parseInt(resolvedSearchParams.page) : 1;
+  const currentPageSize = typeof resolvedSearchParams.pageSize === 'string' ? parseInt(resolvedSearchParams.pageSize) : 39;
   
   // Extract filter parameters
   const filters: Record<string, string> = {};
   
   // Add type filter if present and not 'all'
-  if (params['filters[type][$eq]'] && params['filters[type][$eq]'] !== 'all') {
-    filters['filters[type][$eq]'] = params['filters[type][$eq]'];
+  if (resolvedSearchParams['filters[type][$eq]'] && resolvedSearchParams['filters[type][$eq]'] !== 'all') {
+    filters['filters[type][$eq]'] = resolvedSearchParams['filters[type][$eq]'];
   }
   
   // Add region filter if present and not 'all'
-  if (params['filters[region][$eq]'] && params['filters[region][$eq]'] !== 'all') {
-    filters['filters[region][$eq]'] = params['filters[region][$eq]'];
+  if (resolvedSearchParams['filters[region][$eq]'] && resolvedSearchParams['filters[region][$eq]'] !== 'all') {
+    filters['filters[region][$eq]'] = resolvedSearchParams['filters[region][$eq]'];
   }
   
   // Add period filter if present and not 'all'
-  if (params['filters[period][$eq]'] && params['filters[period][$eq]'] !== 'all') {
-    filters['filters[period][$eq]'] = params['filters[period][$eq]'];
+  if (resolvedSearchParams['filters[period][$eq]'] && resolvedSearchParams['filters[period][$eq]'] !== 'all') {
+    filters['filters[period][$eq]'] = resolvedSearchParams['filters[period][$eq]'];
   }
   
   // Fetch items with pagination and filters
@@ -51,9 +54,14 @@ export default async function Items({
   const { pagination } = result.meta;
   const totalPages = pagination.pageCount;
 
+
+  const { locale } = params;
+
+  // ensure we use a valid locale
+  const validLocale = validateLocale(locale);
+
   // fetch the UI elements text
-  const UIElementsFrPagination = await getUIElements('fr', 'pagination');
-  const UIElementsFrFilters = await getUIElements('fr', 'filter');
+  const data: LocalizedTranslations = await getLocalizedTranslations();
 
   return (
     <div className="min-h-screen">
@@ -74,7 +82,7 @@ export default async function Items({
             {/* Filters - full width on mobile/tablet, aligned right on desktop */}
             <div className="w-full lg:w-auto">
               {/* Filters component */}
-              <Filters UIElementsFrFilters={UIElementsFrFilters} />
+              <Filters LocalizedTranslationsWithLocale={data[validLocale]} />
             </div>
           </div>
         </div>
@@ -88,7 +96,7 @@ export default async function Items({
           totalPages={totalPages} 
           pageSize={currentPageSize} 
           basePath="/collection"
-          UIElementsFrPagination={UIElementsFrPagination}
+          LocalizedTranslationsWithLocale={data[validLocale]}
         />
       </div>
     </div>

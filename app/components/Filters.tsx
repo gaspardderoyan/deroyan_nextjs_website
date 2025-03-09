@@ -5,6 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 // Import select components directly from shadcn/ui
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
+import { LocalizedTranslations } from "@/app/lib/UI_api";
+
 
 // Define all filter options in a single object 
 // Each category has its own array of options
@@ -52,9 +54,11 @@ const SELECT_ITEM_STYLES = "relative flex w-full cursor-default select-none item
  * Filters component for filtering the collection by type, region, and period
  * Maintains filter state in URL parameters for shareable links and browser history
  */
-export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: Map<string, string> }) {
+export default function Filters({ LocalizedTranslationsWithLocale }: { LocalizedTranslationsWithLocale: LocalizedTranslations[string] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const localizedTranslations = LocalizedTranslationsWithLocale;
   
   // Get current filter values from URL or use 'all' as default
   const [type, setType] = useState(searchParams.get("filters[type][$eq]") || "all");
@@ -142,7 +146,7 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
                       </SelectPrimitive.ItemIndicator>
                     </span>
                     <SelectPrimitive.ItemText>
-                      {UIElementsFrFilters.get(`filter.type.${value}`) || 'fail'}
+                      {localizedTranslations[`filter.type.${value}`].value}
                     </SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
@@ -177,7 +181,7 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
                       </SelectPrimitive.ItemIndicator>
                     </span>
                     <SelectPrimitive.ItemText>
-                      {UIElementsFrFilters.get(`filter.region.${value}`) || 'fail'}
+                      {localizedTranslations[`filter.region.${value}`].value}
                     </SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
@@ -212,7 +216,7 @@ export default function Filters({ UIElementsFrFilters }: { UIElementsFrFilters: 
                       </SelectPrimitive.ItemIndicator>
                     </span>
                     <SelectPrimitive.ItemText>
-                      {UIElementsFrFilters.get(`filter.period.${value}`) || 'fail'}
+                      {localizedTranslations[`filter.period.${value}`].value}
                     </SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}

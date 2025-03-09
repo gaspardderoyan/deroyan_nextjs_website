@@ -1,30 +1,66 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { locales } from '@/middleware';
+import { getLocaleDisplayName } from '@/app/lib/i18n';
 
 /**
- * Language toggle button component
- * Switches between English and French
- * This is a client component that maintains its own state
+ * LanguageToggle component that allows users to switch between available locales
+ * This is a client component that uses Next.js's usePathname and useRouter hooks
+ * to redirect to the equivalent path in the selected locale
  */
 export default function LanguageToggle() {
-  // State to track the current locale
-  const [locale, setLocale] = useState('en');
+  const pathname = usePathname();
+  const router = useRouter();
   
-  // Function to toggle between English and French
+  // Extract the current locale from the pathname
+  // Wrapped in useCallback to avoid dependency issues with useEffect
+  const getCurrentLocale = useCallback(() => {
+    // The pathname format is /{locale}/rest/of/path
+    const firstSegment = pathname.split('/')[1];
+    return locales.includes(firstSegment) ? firstSegment : 'en';
+  }, [pathname]);
+  
+  // State to track the current locale
+  const [locale, setLocale] = useState(getCurrentLocale());
+  
+  // Update locale state when pathname changes
+  useEffect(() => {
+    setLocale(getCurrentLocale());
+  }, [getCurrentLocale]);
+  
+  // Function to toggle between available locales
   const toggleLocale = () => {
-    setLocale(locale === 'en' ? 'fr' : 'en');
-    // Note: In a real implementation, this would also update the app's locale context
-    // or call an API to change the language throughout the application
+    // Get the next locale (cycling through available locales)
+    const currentIndex = locales.indexOf(locale);
+    const nextLocale = locales[(currentIndex + 1) % locales.length];
+    
+    // Update the locale state
+    setLocale(nextLocale);
+    
+    // Construct the new pathname with the new locale
+    const pathSegments = pathname.split('/');
+    
+    // If the first segment is a locale, replace it
+    if (locales.includes(pathSegments[1])) {
+      pathSegments[1] = nextLocale;
+    } else {
+      // If not, insert the locale after the first slash
+      pathSegments.splice(1, 0, nextLocale);
+    }
+    
+    // Navigate to the new path
+    router.push(pathSegments.join('/'));
   };
   
   return (
     <button 
       onClick={toggleLocale}
-      className="text-xs md:text-sm bg-white px-2 py-1 rounded-md border border-gray-300 hover:bg-gray-100 transition-colors shadow-sm font-medium"
+      className="text-xs md:text-sm bg-[hsl(53,28%,89%)] px-2 py-1 border border-black shadow-sm font-medium"
       aria-label="Toggle language"
     >
-      {locale.toUpperCase()}
+      {getLocaleDisplayName(locale)}
     </button>
   );
 } 

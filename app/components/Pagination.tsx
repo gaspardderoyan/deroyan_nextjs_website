@@ -2,18 +2,21 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { LocalizedTranslations } from '../lib/UI_api';
 
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
   pageSize: number;
   basePath: string;
-  UIElementsFrPagination: Map<string, string>;
+  LocalizedTranslationsWithLocale: LocalizedTranslations[string];
 }
 
-export default function Pagination({ currentPage, totalPages, pageSize, basePath, UIElementsFrPagination }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, pageSize, basePath, LocalizedTranslationsWithLocale }: PaginationProps) {
   // Get current search parameters to preserve filters when navigating
   const searchParams = useSearchParams();
+
+  const localizedTranslations = LocalizedTranslationsWithLocale;
   
   // If there's only one page, don't show pagination
   if (totalPages <= 1) {
@@ -51,7 +54,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
           aria-label="Previous page"
           prefetch={true}
         >
-          {UIElementsFrPagination.get('pagination.prev')}
+          {localizedTranslations['pagination.prev'].value}
         </Link>
       )}
       
@@ -130,7 +133,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
           aria-label="Next page"
           prefetch={true}
         >
-          {UIElementsFrPagination.get('pagination.next')}
+          {localizedTranslations['pagination.next'].value}
         </Link>
       )}
     </div>

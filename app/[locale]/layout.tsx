@@ -3,7 +3,6 @@ import { Libre_Baskerville } from "next/font/google";
 import "@/app/globals.css";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
-
 // Load Libre Baskerville font
 const libreBaskerville = Libre_Baskerville({
   weight: ['400', '700'],
