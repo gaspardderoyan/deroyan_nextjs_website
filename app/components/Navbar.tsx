@@ -1,21 +1,24 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getUIElements } from '@/app/lib/api';
+import { getLocalizedTranslations, LocalizedTranslations } from '@/app/lib/UI_api';
 import LanguageToggle from './LanguageToggle';
+import { validateLocale } from '@/app/lib/i18n';
 
 /**
  * Navbar component that displays the site navigation
  * Uses dynamic UI elements fetched at build time
  */
-export async function Navbar() {
+export async function Navbar({
+  params
+}: {
+  params: { locale: string }
+}) {
   // Fetch UI elements at build time
-  const uiElementsFr = await getUIElements('fr');
-  const uiElementsEn = await getUIElements('en');
-  
-  // Use the fetched values or fallback to defaults if API call fails
-  const collectionText = uiElementsFr.get('navbar.collection') || 'Not found';
-  const aboutText = uiElementsFr.get('navbar.about') || 'Not found';
-  const contactText = uiElementsFr.get('navbar.contact') || 'Not found';
+  const data: LocalizedTranslations = await getLocalizedTranslations();
+  const { locale } = params;
+
+  // ensure we use a valid locale
+  const validLocale = validateLocale(locale);
 
   return (
     <nav className="flex items-center px-4 lg:px-6 py-4 bg-[#EAE8DA] border-b border-black relative min-h-[50px] lg:min-h-[80px]">
@@ -37,13 +40,13 @@ export async function Navbar() {
         {/* Navigation links - right aligned on mobile/tablet, centered on desktop */}
         <div className="flex items-center space-x-3 lg:space-x-8">
           <Link href="/collection" className="text-gray-800 hover:text-gray-600 transition-colors text-sm lg:text-base">
-            {collectionText}
+            {data[validLocale]['navbar.collection'].value}
           </Link>
           <Link href="/about" className="text-gray-800 hover:text-gray-600 transition-colors text-sm lg:text-base">
-            {aboutText}
+            {data[validLocale]['navbar.about'].value}
           </Link>
           <Link href="/contact" className="text-gray-800 hover:text-gray-600 transition-colors text-sm lg:text-base">
-            {contactText}
+            {data[validLocale]['navbar.contact'].value}
           </Link>
         </div>
         

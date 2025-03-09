@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Libre_Baskerville } from "next/font/google";
-import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import "@/app/globals.css";
+import Navbar from "@/app/components/Navbar";
+import Footer from "@/app/components/Footer";
 
 // Load Libre Baskerville font
 const libreBaskerville = Libre_Baskerville({
@@ -28,11 +28,11 @@ export default function RootLayout({
   return (
     <html lang={locale}>
       <body className={`${libreBaskerville.className} antialiased bg-[#EAE8DA] min-h-screen`}>
-        <Navbar />
+        <Navbar params={{ locale }} />
         <main className="bg-[#EAE8DA]">
           {children}
         </main>
-        <Footer />
+        <Footer params={{ locale }} />
       </body>
     </html>
   );
