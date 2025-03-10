@@ -72,10 +72,10 @@ export default async function Items({
         {/* On desktop: h1 and filters side by side */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{collectionTitle}</h1>
+            <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2">{collectionTitle}</h1>
             
             {/* Display the total number of items found */}
-            <p className="text-gray-600 mb-4 lg:mb-0">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-4 lg:mb-0">
               {pagination.total} {itemFoundText}
             </p>
           </div>
