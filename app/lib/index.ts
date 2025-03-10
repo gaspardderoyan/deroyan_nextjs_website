@@ -26,14 +26,19 @@ export interface ImageData {
  * Interface representing an art item from the Strapi API
  * Contains all the information about an art piece including its metadata and associated images
  */
-export interface ArtItem {
+export interface BaseArtItem {
   id: number;
   documentId: string;
   title: string;
   description: string | null;
   bullet_list: string;
   type: string;
-  images: ImageData[];
-  localizations: ArtItem[];
+  region: string;
+  period: string;
   slug: string;
+}
+
+export interface ArtItem extends BaseArtItem {
+  images: ImageData[];
+  localizations: BaseArtItem[];
 }

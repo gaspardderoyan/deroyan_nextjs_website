@@ -66,6 +66,8 @@ export default function ItemGrid({ items, locale }: ItemGridProps) {
         const bulletPoints = item.bullet_list?.split('\n') || [];
         // Use the first bullet point as alt text, or fall back to item title if no bullet points
         const altText = bulletPoints.length > 0 ? bulletPoints[0] : item.title;
+
+        const title = locale === 'fr' ? item.title : item.localizations[0].title;
         
         return (
           // Link wrapper makes the entire grid cell clickable
@@ -103,7 +105,7 @@ export default function ItemGrid({ items, locale }: ItemGridProps) {
               {/* - py-4 adds equal vertical padding for better spacing */}
               {/* - bg-[hsl(53,28%,93%)] sets the background color to the specified HSL value */}
               <div className="flex items-center justify-center py-4 text-center px-4 bg-[hsl(53,28%,92%)]">
-                <h2 className="font-medium truncate">{formatTitle(item.title)}</h2>
+                <h2 className="font-medium truncate">{formatTitle(title)}</h2>
               </div>
             </div>
           </ Link>

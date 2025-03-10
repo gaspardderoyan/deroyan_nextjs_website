@@ -79,7 +79,7 @@ export async function fetchItems(
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
   
   // Build the query string with pagination parameters
-  let queryString = `populate=images&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
+  let queryString = `populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
   
   // Add filter parameters if provided
   if (filters) {
