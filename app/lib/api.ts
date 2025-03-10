@@ -123,7 +123,7 @@ export async function fetchItem(slug: string): Promise<PaginatedApiResponse> {
   // Make the API call using the fetch API
   // The ?populate=images part tells Strapi to include image data
   const response = await fetch(
-    `${apiUrl}/api/carpets?filters[slug][$eq]=${slug}&populate=images`,
+    `${apiUrl}/api/carpets?filters[slug][$eq]=${slug}&populate=*`,
     // TODO: remove the caching?
     { next: { revalidate: 3600, tags: [`item-${slug}`] } } // Cache for 1 hour and add a tag for targeted revalidation
   );

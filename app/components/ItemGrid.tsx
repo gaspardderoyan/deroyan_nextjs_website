@@ -63,7 +63,7 @@ export default function ItemGrid({ items, locale }: ItemGridProps) {
           getFullImageUrl(image.formats?.small?.url || image.url) : '';
         
         // Extract the first bullet point from bullet_list if available
-        const bulletPoints = item.bullet_list?.split('\n') || [];
+        const bulletPoints = locale === 'fr' ? item.bullet_list?.split('\n') || [] : item.localizations[0].bullet_list?.split('\n') || [];
         // Use the first bullet point as alt text, or fall back to item title if no bullet points
         const altText = bulletPoints.length > 0 ? bulletPoints[0] : item.title;
 

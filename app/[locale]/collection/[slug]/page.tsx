@@ -73,8 +73,7 @@ export async function generateMetadata({ params }: PageParams) {
 // The main page component - using proper typing
 export default async function Page({ params }: PageParams) {
   // Extract slug from params after awaiting
-  const resolvedParams = await params;
-  const slug = resolvedParams.slug;
+  const { locale, slug} = await params;
   
   // Fetch the art item data using the slug from the URL
   const response = await fetchItem(slug);
@@ -92,7 +91,7 @@ export default async function Page({ params }: PageParams) {
   return (
     <>
       <ScrollToTop>
-        <ItemDetail item={item} />
+        <ItemDetail item={item} locale={locale} />
       </ScrollToTop>
     </>
   );

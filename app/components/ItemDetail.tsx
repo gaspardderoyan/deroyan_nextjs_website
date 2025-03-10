@@ -11,7 +11,7 @@ interface ItemDetailProps {
   };
 }
 
-export default function ItemDetail({ item }: ItemDetailProps) {
+export default function ItemDetail({ item, locale }: ItemDetailProps & { locale: string }) {
   // If no item data, show a message
   if (!item.data) {
     return (
@@ -23,7 +23,13 @@ export default function ItemDetail({ item }: ItemDetailProps) {
   }
   
   // Convert the bullet_list string into an array by splitting at newline characters
-  const bulletPoints = item.data.bullet_list?.split('\n') || [];
+  const bulletPoints = locale === 'fr' ? item.data.bullet_list?.split('\n') || [] : item.data.localizations[0].bullet_list?.split('\n') || [];
+
+  const title = locale === 'fr' ? item.data.title : item.data.localizations[0].title;
+
+  const description = locale === 'fr' 
+    ? (item.data.description || null) 
+    : item.data.localizations[0].description || null;
 
   return (
     // Container for the whole page with some padding
@@ -48,7 +54,7 @@ export default function ItemDetail({ item }: ItemDetailProps) {
           {/* Right column - Item details */}
           <div className="w-full lg:w-1/2 lg:border-l lg:border-black pl-0 lg:pl-8 pt-6 lg:pt-8 pb-8 sm:pb-12 lg:pb-8">
             {/* Title of the art piece */}
-            <h1 className="text-2xl font-bold mb-6">{item.data.title}</h1>
+            <h1 className="text-2xl font-bold mb-6">{title}</h1>
             
             {/* 
               Bullet list:
@@ -70,8 +76,8 @@ export default function ItemDetail({ item }: ItemDetailProps) {
               Only show the description if it exists
               text-gray-600 makes the text slightly lighter
             */}
-            {item.data.description && (
-              <p className="text-gray-600">{item.data.description}</p>
+            {description && (
+              <p className="text-gray-600">{description}</p>
             )}
           </div>
         </div>
