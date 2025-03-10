@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getLocalizedTranslations, LocalizedTranslations } from '@/app/lib/UI_api';
 import LanguageToggle from './LanguageToggle';
 import { validateLocale } from '@/app/lib/i18n';
+import { Suspense } from 'react';
 
 /**
  * Navbar component that displays the site navigation
@@ -52,7 +53,9 @@ export async function Navbar({
         
         {/* Language toggle - always on the right side with margin */}
         <div className="flex items-center ml-3 lg:ml-6 lg:absolute lg:right-6">
-          <LanguageToggle />
+          <Suspense fallback={<div className="text-xs md:text-sm bg-[hsl(53,28%,89%)] px-2 py-1 border border-black shadow-sm font-medium">...</div>}>
+            <LanguageToggle />
+          </Suspense>
         </div>
       </div>
     </nav>
