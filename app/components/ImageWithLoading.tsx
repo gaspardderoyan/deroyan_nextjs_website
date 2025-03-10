@@ -21,7 +21,7 @@ export default function ImageWithLoading({
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <div className="relative w-full h-full max-w-[75%] max-h-[75%]">
+    <div className="relative w-full h-full max-w-[90%] max-h-[90%] md:max-w-[80%] md:max-h-[80%]">
       {/* Skeleton loader that shows while the image is loading */}
       {!isLoaded && (
         <div className="absolute inset-0 bg-[hsl(53,28%,89%)] animate-pulse" />
