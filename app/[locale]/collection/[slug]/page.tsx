@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 interface PageParams {
   params: Promise<{
     slug: string;
+    locale: string;
   }>;
 }
 
