@@ -66,7 +66,7 @@ export default async function Items({
 
   // Return the component with a single root element
   return (
-    <div className="container mx-auto px-12 md:px-16 lg:px-24 py-8">
+    <div className="container mx-auto px-4 lg:px-24 py-8">
       {/* Header section with responsive layout */}
       <div className="mb-6">
         {/* On desktop: h1 and filters side by side */}
