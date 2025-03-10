@@ -34,5 +34,6 @@ export interface ArtItem {
   bullet_list: string;
   type: string;
   images: ImageData[];
+  localizations: ArtItem[];
   slug: string;
 }

@@ -73,7 +73,7 @@ interface UIElementsResponse {
 export async function fetchItems(
   page: number = 1, 
   pageSize: number = 39,
-  filters?: FilterParams
+  filters?: FilterParams,
 ): Promise<PaginatedApiResponse> {
   // Get the API URL from environment variables or use a default
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';

@@ -6,6 +6,7 @@ import ImageWithLoading from '@/app/components/ImageWithLoading';
 // TypeScript interfaces for the component props
 interface ItemGridProps {
   items: ArtItem[];
+  locale: string;
 }
 
 /**
@@ -48,7 +49,7 @@ function formatTitle(text: string): string {
   );
 }
 
-export default function ItemGrid({ items }: ItemGridProps) {
+export default function ItemGrid({ items, locale }: ItemGridProps) {
   return (
     // Main grid container with responsive columns
     // - 1 column on mobile and medium screens, 3 on large screens
@@ -73,7 +74,7 @@ export default function ItemGrid({ items }: ItemGridProps) {
           // - touch-manipulation improves touch behavior on mobile devices
           <Link 
             key={item.id}
-            href={`/collection/${item.slug}`}
+            href={`/${locale}/collection/${item.slug}`}
             className="border-r border-b border-black relative cursor-pointer grid-item touch-manipulation"
           >
             {/* Square aspect ratio container for consistent cell dimensions */}

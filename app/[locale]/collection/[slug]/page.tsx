@@ -90,8 +90,10 @@ export default async function Page({ params }: PageParams) {
   // Render the ItemDetail component with the fetched data
   // Wrap with ScrollToTop component to ensure page scrolls to top on load
   return (
-    <ScrollToTop>
-      <ItemDetail item={item} />
-    </ScrollToTop>
+    <>
+      <ScrollToTop>
+        <ItemDetail item={item} />
+      </ScrollToTop>
+    </>
   );
 }
