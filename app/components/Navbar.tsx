@@ -8,6 +8,8 @@ import { Suspense } from 'react';
 /**
  * Navbar component that displays the site navigation
  * Uses dynamic UI elements fetched at build time
+ * On mobile: Two-row layout with logo and language toggle in first row, nav links in second row
+ * On desktop: Single row layout with logo on left, nav links and language toggle on right
  */
 export async function Navbar({
   params
@@ -22,23 +24,33 @@ export async function Navbar({
   const validLocale = validateLocale(locale);
 
   return (
-    <nav className="flex items-center px-4 lg:px-6 py-4 bg-[#EAE8DA] border-b border-black relative min-h-[50px] lg:min-h-[80px]">
-      {/* Logo on the left */}
-      <div className="absolute left-2 lg:left-6 top-1/2 transform -translate-y-1/2 z-10">
-        <Link href={`/${validLocale}`}>
-          <Image
-            src="/galerie_logo.png"
-            alt="Galerie Logo"
-            width={300}
-            height={50}
-            className="w-[130px] md:w-[180px] lg:w-[250px] object-contain"
-          />
-        </Link>
+    <nav className="flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 lg:px-6 py-2 lg:py-4 bg-[#EAE8DA] border-b border-black relative">
+      {/* First row on mobile: Logo and Language Toggle */}
+      <div className="flex justify-between items-center w-full py-2 lg:py-0 min-h-[50px] lg:min-h-[80px] lg:w-auto">
+        {/* Logo */}
+        <div className="lg:relative z-10">
+          <Link href={`/${validLocale}`}>
+            <Image
+              src="/galerie_logo.png"
+              alt="Galerie Logo"
+              width={300}
+              height={50}
+              className="w-[130px] md:w-[180px] lg:w-[250px] object-contain"
+            />
+          </Link>
+        </div>
+        
+        {/* Language toggle - right side on mobile, hidden on desktop as it's moved to the right side container */}
+        <div className="lg:hidden">
+          <Suspense fallback={<div className="text-xs md:text-sm bg-[hsl(53,28%,89%)] px-2 py-1 border border-black shadow-sm font-medium">...</div>}>
+            <LanguageToggle />
+          </Suspense>
+        </div>
       </div>
       
-      {/* Right side container with flex layout - takes up the full width */}
-      <div className="flex justify-end lg:justify-center items-center w-full ml-[140px] md:ml-[190px] lg:ml-0">
-        {/* Navigation links - right aligned on mobile/tablet, centered on desktop */}
+      {/* Second row on mobile / Right side on desktop: Navigation Links and Language Toggle */}
+      <div className="flex justify-center lg:justify-end items-center w-full py-2 lg:py-0">
+        {/* Navigation links - centered on mobile, right-aligned on desktop */}
         <div className="flex items-center space-x-3 lg:space-x-8">
           <Link href={`/${validLocale}/collection`} className="text-gray-800 hover:text-gray-600 transition-colors text-sm lg:text-base">
             {data[validLocale]['navbar.collection'].value}
@@ -51,8 +63,8 @@ export async function Navbar({
           </Link>
         </div>
         
-        {/* Language toggle - always on the right side with margin */}
-        <div className="flex items-center ml-3 lg:ml-6 lg:absolute lg:right-6">
+        {/* Language toggle on desktop - positioned next to nav links */}
+        <div className="hidden lg:flex items-center ml-6">
           <Suspense fallback={<div className="text-xs md:text-sm bg-[hsl(53,28%,89%)] px-2 py-1 border border-black shadow-sm font-medium">...</div>}>
             <LanguageToggle />
           </Suspense>
