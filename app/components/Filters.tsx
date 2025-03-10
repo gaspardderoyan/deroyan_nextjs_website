@@ -49,7 +49,7 @@ const SELECT_CONTENT_STYLES = "relative z-50 max-h-96 min-w-[8rem] overflow-hidd
 
 const SELECT_VIEWPORT_STYLES = "p-1 h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]";
 
-const SELECT_ITEM_STYLES = "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
+const SELECT_ITEM_STYLES = "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none  data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
 
 /**
  * Filters component for filtering the collection by type, region, and period
