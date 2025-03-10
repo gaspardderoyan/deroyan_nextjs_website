@@ -58,6 +58,12 @@ export default async function Items({
   // fetch the UI elements text
   const data: LocalizedTranslations = await getLocalizedTranslations();
 
+  // Define localized text based on the validLocale
+  const collectionTitle = validLocale === 'en' ? 'Our Collection' : 'Notre collection';
+  const itemFoundText = validLocale === 'en' 
+    ? (pagination.total === 1 ? 'item found' : 'items found')
+    : (pagination.total === 1 ? 'objet trouvé' : 'objets trouvés');
+
   // Return the component with a single root element
   return (
     <div className="container mx-auto px-12 md:px-16 lg:px-24 py-8">
@@ -66,11 +72,11 @@ export default async function Items({
         {/* On desktop: h1 and filters side by side */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Notre collection</h1>
+            <h1 className="text-3xl font-bold mb-2">{collectionTitle}</h1>
             
             {/* Display the total number of items found */}
             <p className="text-gray-600 mb-4 lg:mb-0">
-              {pagination.total} {pagination.total === 1 ? 'objet trouvé' : 'objets trouvés'}
+              {pagination.total} {itemFoundText}
             </p>
           </div>
           
