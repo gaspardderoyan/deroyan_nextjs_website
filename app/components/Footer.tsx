@@ -14,7 +14,7 @@ export default async function Footer({
   const validLocale = validateLocale(locale);
 
   return (
-    <footer className="bg-[#EAE8DA] border-t border-black py-6 px-4 sm:px-6 ">
+    <footer className="bg-[#EAE8DA] border-t border-black py-6 px-4 sm:px-6 mt-auto">
       <div className="container mx-auto">
         <div className="flex flex-row justify-between items-start">
           <div>

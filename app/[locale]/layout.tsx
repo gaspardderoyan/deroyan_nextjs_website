@@ -29,9 +29,9 @@ export default async function RootLayout({
   
   return (
     <html lang={validLocale}>
-      <body className={`${libreBaskerville.className} antialiased bg-[#EAE8DA] min-h-screen`}>
+      <body className={`${libreBaskerville.className} antialiased bg-[#EAE8DA] min-h-screen flex flex-col`}>
         <Navbar params={{ locale: validLocale }} />
-        <main className="bg-[#EAE8DA]">
+        <main className="bg-[#EAE8DA] flex-grow">
           {children}
         </main>
         <Footer params={{ locale: validLocale }} />
