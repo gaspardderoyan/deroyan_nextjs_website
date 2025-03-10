@@ -4,8 +4,8 @@ import { validateLocale  } from "@/app/lib/i18n";
 /**
  * Footer component that displays contact information and copyright details
  * Responsive design: 
- * - On mobile: Single column layout with centered, larger text
- * - On larger screens: Two-column layout with left/right alignment
+ * - Two-column layout on all screen sizes (mobile, tablet, desktop)
+ * - Adjusted text sizes and spacing for different screen sizes
  */
 export default async function Footer({
   params
@@ -24,27 +24,27 @@ export default async function Footer({
       <div className="container mx-auto">
         {/* 
           Responsive layout container:
-          - Mobile: flex-col (stacked vertically) with centered content
-          - Tablet/Desktop: flex-row (horizontal) with space-between
+          - Two-column layout on all screen sizes with space-between
+          - Adjusted alignment and spacing for different screen sizes
         */}
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-6 md:gap-0">
+        <div className="flex flex-row justify-between items-start gap-4 sm:gap-6">
           {/* Contact information section */}
-          <div className="text-center md:text-left">
+          <div className="text-left">
             {/* Slightly smaller text size for mobile, with responsive scaling for larger screens */}
             <p className="text-xs sm:text-sm md:text-base mb-1">13, rue Drouot 75009 Paris</p>
             <p className="text-xs sm:text-sm md:text-base mb-1">
-              Tel: <a href="tel:+33148000785" className="underline decoration-black hover:text-gray-700 transition-colors">01.48.00.07.85</a>
+              <a href="tel:+33148000785" className="underline decoration-black hover:text-gray-700 transition-colors">01.48.00.07.85</a>
             </p>
             <p className="text-xs sm:text-sm md:text-base">
-              E.mail: <a href="mailto:galeriederoyan@gmail.com" className="underline decoration-black hover:text-gray-700 transition-colors">galeriederoyan@gmail.com</a>
+               <a href="mailto:galeriederoyan@gmail.com" className="underline decoration-black hover:text-gray-700 transition-colors">galeriederoyan@gmail.com</a>
             </p>
           </div>
           
           {/* Copyright and credits section */}
-          <div className="text-xs sm:text-sm md:text-base text-center md:text-right">
+          <div className="text-xs sm:text-sm md:text-base text-right">
             <p className="mb-1">Deroyan 2025 ©</p>
             <p className="mb-1">{data[validLocale]['footer.rights'].value}</p>
-            <p>Conception: Gaspard Deroyan</p>
+            <p className="mb-1">Gaspard Deroyan</p>
           </div>
         </div>
       </div>
