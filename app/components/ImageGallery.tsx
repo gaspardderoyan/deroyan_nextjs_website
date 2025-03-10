@@ -25,10 +25,13 @@ interface ImageGalleryProps {
  * - Maintaining the selected image state
  * - Handling thumbnail clicks
  * - Rendering the image gallery with zoom functionality
+ * - Handling image loading states with animation
  */
 export default function ImageGallery({ images, title }: ImageGalleryProps) {
   // State to track the currently selected image index
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  // State to track if the main image has loaded
+  const [isMainImageLoaded, setIsMainImageLoaded] = useState(false);
   
   const numImages = images?.length || 0;
   
@@ -53,7 +56,14 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
   
   // Function to handle thumbnail click
   const handleThumbnailClick = (index: number) => {
+    // Reset loading state when changing images
+    setIsMainImageLoaded(false);
     setSelectedImageIndex(index);
+  };
+
+  // Function to handle when the main image has loaded
+  const handleMainImageLoad = () => {
+    setIsMainImageLoaded(true);
   };
 
   return (
@@ -63,13 +73,18 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
         <Dialog>
           <DialogTrigger asChild>
             <div className="relative w-full h-full cursor-zoom-in">
+              {/* Skeleton loader that shows while the image is loading */}
+              {!isMainImageLoaded && (
+                <div className="absolute inset-0 bg-[hsl(53,28%,89%)] animate-pulse" />
+              )}
               <Image 
                 src={imageUrl}
                 alt={title}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 50vw"
-                className="object-contain"
+                className={`object-contain transition-opacity duration-300 ${isMainImageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 priority
+                onLoad={handleMainImageLoad}
               />
             </div>
           </DialogTrigger>
