@@ -24,9 +24,9 @@ export async function Navbar({
   const validLocale = validateLocale(locale);
 
   return (
-    <nav className="flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 lg:px-6 py-2 lg:py-4 bg-[#EAE8DA] border-b border-black relative">
+    <nav className="flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 lg:px-6 py-3 lg:py-4 bg-[#EAE8DA] border-b border-black relative">
       {/* First row on mobile: Logo and Language Toggle */}
-      <div className="flex justify-between items-center w-full py-2 lg:py-0 min-h-[50px] lg:min-h-[80px] lg:w-auto">
+      <div className="flex justify-between items-center w-full py-3 lg:py-0 min-h-[60px] lg:min-h-[80px] lg:w-auto">
         {/* Logo */}
         <div className="lg:relative z-10">
           <Link href={`/${validLocale}`}>
@@ -35,30 +35,30 @@ export async function Navbar({
               alt="Galerie Logo"
               width={300}
               height={50}
-              className="w-[130px] md:w-[180px] lg:w-[250px] object-contain"
+              className="w-[160px] md:w-[200px] lg:w-[250px] object-contain"
             />
           </Link>
         </div>
         
         {/* Language toggle - right side on mobile, hidden on desktop as it's moved to the right side container */}
         <div className="lg:hidden">
-          <Suspense fallback={<div className="text-xs md:text-sm bg-[hsl(53,28%,89%)] px-2 py-1 border border-black shadow-sm font-medium">...</div>}>
+          <Suspense fallback={<div className="text-sm md:text-base bg-[hsl(53,28%,89%)] px-3 py-2 border border-black shadow-sm font-medium">...</div>}>
             <LanguageToggle />
           </Suspense>
         </div>
       </div>
       
       {/* Second row on mobile / Right side on desktop: Navigation Links and Language Toggle */}
-      <div className="flex justify-center lg:justify-end items-center w-full py-2 lg:py-0">
+      <div className="flex justify-center lg:justify-end items-center w-full py-3 lg:py-0">
         {/* Navigation links - centered on mobile, right-aligned on desktop */}
-        <div className="flex items-center space-x-3 lg:space-x-8">
-          <Link href={`/${validLocale}/collection`} className="text-gray-800 hover:text-gray-600 transition-colors text-sm lg:text-base">
+        <div className="flex items-center space-x-5 lg:space-x-8">
+          <Link href={`/${validLocale}/collection`} className="text-gray-800 hover:text-gray-600 transition-colors text-base font-medium lg:text-base lg:font-normal">
             {data[validLocale]['navbar.collection'].value}
           </Link>
-          <Link href={`/${validLocale}/about`} className="text-gray-800 hover:text-gray-600 transition-colors text-sm lg:text-base">
+          <Link href={`/${validLocale}/about`} className="text-gray-800 hover:text-gray-600 transition-colors text-base font-medium lg:text-base lg:font-normal">
             {data[validLocale]['navbar.about'].value}
           </Link>
-          <Link href={`/${validLocale}/contact`} className="text-gray-800 hover:text-gray-600 transition-colors text-sm lg:text-base">
+          <Link href={`/${validLocale}/contact`} className="text-gray-800 hover:text-gray-600 transition-colors text-base font-medium lg:text-base lg:font-normal">
             {data[validLocale]['navbar.contact'].value}
           </Link>
         </div>

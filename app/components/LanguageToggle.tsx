@@ -66,7 +66,7 @@ export default function LanguageToggle() {
   return (
     <button 
       onClick={toggleLocale}
-      className="text-xs md:text-sm bg-[hsl(53,28%,89%)] px-2 py-1 border border-black shadow-sm font-medium"
+      className="text-sm md:text-base bg-[hsl(53,28%,89%)] px-3 py-2 border border-black shadow-sm font-medium"
       aria-label="Toggle language"
     >
       {getLocaleDisplayName(locale)}
