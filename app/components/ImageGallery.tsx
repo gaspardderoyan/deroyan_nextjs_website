@@ -6,7 +6,7 @@ import {
   Dialog, 
   DialogContent, 
   DialogTrigger,
-  DialogTitle 
+  DialogTitle
 } from '@/app/lib/dialog';
 import { ImageData } from '@/app/lib';
 import { getFullImageUrl } from '@/app/lib/api';
@@ -32,6 +32,8 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   // State to track if the main image has loaded
   const [isMainImageLoaded, setIsMainImageLoaded] = useState(false);
+  // State to control the dialog open state
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   
   const numImages = images?.length || 0;
   
@@ -66,13 +68,21 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
     setIsMainImageLoaded(true);
   };
 
+  // Function to handle dialog close
+  const handleDialogClick = () => {
+    setIsDialogOpen(false);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="relative h-[350px] sm:h-[500px] lg:h-[650px] bg-[#EAE8DA] rounded-lg overflow-hidden">
         {/* Wrap the image in a Dialog component for zoomable view */}
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <div className="relative w-full h-full cursor-zoom-in">
+            <div 
+              className="relative w-full h-full cursor-zoom-in"
+              onClick={() => setIsDialogOpen(true)}
+            >
               {/* Skeleton loader that shows while the image is loading */}
               {!isMainImageLoaded && (
                 <div className="absolute inset-0 bg-[hsl(53,28%,89%)] animate-pulse" />
@@ -88,7 +98,10 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
               />
             </div>
           </DialogTrigger>
-          <DialogContent className="max-w-7xl border-0 bg-transparent p-0">
+          <DialogContent 
+            className="max-w-7xl border-0 bg-transparent p-0 cursor-pointer"
+            onClick={handleDialogClick}
+          >
             {/* Adding DialogTitle for accessibility, with sr-only to hide it visually */}
             <DialogTitle className="sr-only">
               {title}
