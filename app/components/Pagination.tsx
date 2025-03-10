@@ -2,21 +2,17 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { LocalizedTranslations } from '../lib/UI_api';
 
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
   pageSize: number;
   basePath: string;
-  LocalizedTranslationsWithLocale: LocalizedTranslations[string];
 }
 
-export default function Pagination({ currentPage, totalPages, pageSize, basePath, LocalizedTranslationsWithLocale }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, pageSize, basePath }: PaginationProps) {
   // Get current search parameters to preserve filters when navigating
   const searchParams = useSearchParams();
-
-  const localizedTranslations = LocalizedTranslationsWithLocale;
   
   // If there's only one page, don't show pagination
   if (totalPages <= 1) {
@@ -36,105 +32,76 @@ export default function Pagination({ currentPage, totalPages, pageSize, basePath
     return `${basePath}?${params.toString()}`;
   };
 
-  // Common button classes with focus and active states explicitly reset
-  const commonBtnClasses = "px-3 py-2 border border-black text-sm sm:text-base focus:outline-none";
+  // Common button classes for all pagination elements (arrows and page numbers)
+  // Using the same dimensions for all elements to ensure consistency
+  const btnClasses = "flex items-center justify-center w-10 h-10 border border-black text-xs sm:text-sm focus:outline-none";
   const activeBtnClasses = "bg-black text-white";
   const inactiveBtnClasses = "hover:bg-black hover:text-white transition-colors focus:bg-transparent focus:text-black active:bg-transparent active:text-black";
-  
-  // Navigation button classes (Previous/Next)
-  const navBtnClasses = "px-2 sm:px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors text-sm sm:text-base focus:outline-none focus:bg-transparent focus:text-black active:bg-transparent active:text-black";
 
   return (
-    <div className="flex flex-wrap justify-center mt-8 gap-1 px-2">
-      {/* Previous page button */}
-      {currentPage > 1 && (
+    <div className="flex items-center justify-center mt-6 sm:mt-8 gap-1 px-2">
+      {/* Previous page button (arrow) */}
+      {currentPage > 1 ? (
         <Link
           href={getPageUrl(currentPage - 1)}
-          className={navBtnClasses}
+          className={`${btnClasses} ${inactiveBtnClasses}`}
           aria-label="Previous page"
           prefetch={true}
         >
-          {localizedTranslations['pagination.prev'].value}
+          <span aria-hidden="true">←</span>
+        </Link>
+      ) : (
+        <div className={`${btnClasses} opacity-50 cursor-not-allowed`}>
+          <span aria-hidden="true">←</span>
+        </div>
+      )}
+      
+      {/* First page - only show if not current page */}
+      {currentPage > 1 && (
+        <Link
+          href={getPageUrl(1)}
+          className={`${btnClasses} ${inactiveBtnClasses}`}
+          prefetch={true}
+        >
+          1
         </Link>
       )}
       
-      {/* First page */}
+      {/* Current page */}
       <Link
-        href={getPageUrl(1)}
-        className={`${commonBtnClasses} ${
-          currentPage === 1 ? activeBtnClasses : inactiveBtnClasses
-        }`}
+        href={getPageUrl(currentPage)}
+        className={`${btnClasses} ${activeBtnClasses}`}
         prefetch={true}
+        aria-current="page"
       >
-        1
+        {currentPage}
       </Link>
       
-      {/* Ellipsis for many pages - only show on larger screens */}
-      {currentPage > 3 && (
-        <span className="hidden sm:inline-block px-2 py-2 border border-black text-sm sm:text-base">...</span>
-      )}
-      
-      {/* Page before current if not first or second page */}
-      {currentPage > 2 && (
-        <Link
-          href={getPageUrl(currentPage - 1)}
-          className={`${commonBtnClasses} ${inactiveBtnClasses}`}
-          prefetch={true}
-        >
-          {currentPage - 1}
-        </Link>
-      )}
-      
-      {/* Current page if not first page */}
-      {currentPage !== 1 && currentPage !== totalPages && (
-        <Link
-          href={getPageUrl(currentPage)}
-          className={`${commonBtnClasses} ${activeBtnClasses}`}
-          prefetch={true}
-        >
-          {currentPage}
-        </Link>
-      )}
-      
-      {/* Page after current if not last or second-to-last page */}
-      {currentPage < totalPages - 1 && (
-        <Link
-          href={getPageUrl(currentPage + 1)}
-          className={`${commonBtnClasses} ${inactiveBtnClasses}`}
-          prefetch={true}
-        >
-          {currentPage + 1}
-        </Link>
-      )}
-      
-      {/* Ellipsis for many pages - only show on larger screens */}
-      {currentPage < totalPages - 2 && (
-        <span className="hidden sm:inline-block px-2 py-2 border border-black text-sm sm:text-base">...</span>
-      )}
-      
-      {/* Last page if not the first page */}
-      {totalPages > 1 && (
+      {/* Last page - only show if not current page */}
+      {currentPage < totalPages && (
         <Link
           href={getPageUrl(totalPages)}
-          className={`${commonBtnClasses} ${
-            currentPage === totalPages ? activeBtnClasses : inactiveBtnClasses
-          }`}
+          className={`${btnClasses} ${inactiveBtnClasses}`}
           prefetch={true}
         >
           {totalPages}
         </Link>
       )}
       
-      {/* Next page button */}
-      {currentPage < totalPages && (
+      {/* Next page button (arrow) */}
+      {currentPage < totalPages ? (
         <Link
           href={getPageUrl(currentPage + 1)}
-          className={navBtnClasses}
+          className={`${btnClasses} ${inactiveBtnClasses}`}
           aria-label="Next page"
           prefetch={true}
         >
-          {localizedTranslations['pagination.next'].value}
+          <span aria-hidden="true">→</span>
         </Link>
+      ) : (
+        <div className={`${btnClasses} opacity-50 cursor-not-allowed`}>
+          <span aria-hidden="true">→</span>
+        </div>
       )}
     </div>
   );
