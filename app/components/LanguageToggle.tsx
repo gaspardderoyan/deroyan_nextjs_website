@@ -1,18 +1,20 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { locales } from '@/middleware';
 import { getLocaleDisplayName } from '@/app/lib/i18n';
 
 /**
  * LanguageToggle component that allows users to switch between available locales
  * This is a client component that uses Next.js's usePathname and useRouter hooks
- * to redirect to the equivalent path in the selected locale
+ * to redirect to the equivalent path in the selected locale while preserving query parameters
  */
 export default function LanguageToggle() {
   const pathname = usePathname();
   const router = useRouter();
+  // Get current search parameters to preserve them when switching languages
+  const searchParams = useSearchParams();
   
   // Extract the current locale from the pathname
   // Wrapped in useCallback to avoid dependency issues with useEffect
@@ -50,8 +52,15 @@ export default function LanguageToggle() {
       pathSegments.splice(1, 0, nextLocale);
     }
     
-    // Navigate to the new path
-    router.push(pathSegments.join('/'));
+    // Get the current search parameters string
+    const queryString = searchParams.toString();
+    
+    // Navigate to the new path with preserved query parameters
+    const newPath = pathSegments.join('/');
+    const fullPath = queryString ? `${newPath}?${queryString}` : newPath;
+    
+    // Navigate to the new path with preserved query parameters
+    router.push(fullPath);
   };
   
   return (

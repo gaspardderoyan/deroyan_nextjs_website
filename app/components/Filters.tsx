@@ -1,11 +1,12 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 // Import select components directly from shadcn/ui
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
 import { LocalizedTranslations } from "@/app/lib/UI_api";
+import { locales } from "@/middleware";
 
 
 // Define all filter options in a single object 
@@ -57,6 +58,16 @@ const SELECT_ITEM_STYLES = "relative flex w-full cursor-default select-none item
 export default function Filters({ LocalizedTranslationsWithLocale }: { LocalizedTranslationsWithLocale: LocalizedTranslations[string] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  // Extract the current locale from the pathname
+  const getCurrentLocale = useCallback(() => {
+    // The pathname format is /{locale}/rest/of/path
+    const firstSegment = pathname.split('/')[1];
+    return locales.includes(firstSegment) ? firstSegment : 'en';
+  }, [pathname]);
+  
+  const currentLocale = getCurrentLocale();
 
   const localizedTranslations = LocalizedTranslationsWithLocale;
   
@@ -86,10 +97,10 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
         params.set("page", "1");
       }
       
-      // Update the URL with the new search parameters
-      router.push(`/collection?${params.toString()}`);
+      // Update the URL with the new search parameters, including the locale
+      router.push(`/${currentLocale}/collection?${params.toString()}`);
     },
-    [router, searchParams]
+    [router, searchParams, currentLocale]
   );
   
   // Handle filter changes

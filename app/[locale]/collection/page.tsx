@@ -90,12 +90,12 @@ export default async function Items({
         {/* Use the ItemGrid component */}
         <ItemGrid items={result.data} />
         
-        {/* Use our custom Pagination component */}
+        {/* Use our custom Pagination component with locale-aware basePath */}
         <Pagination 
           currentPage={currentPage} 
           totalPages={totalPages} 
           pageSize={currentPageSize} 
-          basePath="/collection"
+          basePath={`/${validLocale}/collection`}
           LocalizedTranslationsWithLocale={data[validLocale]}
         />
       </div>
