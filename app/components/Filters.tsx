@@ -127,9 +127,9 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
   }, [searchParams]);
   
   return (
-    <div className="flex flex-row flex-wrap gap-3 w-full lg:justify-end">
+    <div className="flex flex-col sm:flex-row flex-wrap gap-3 w-full lg:justify-end">
       {/* Type filter */}
-      <div className="flex-1 min-w-[120px] max-w-[180px]">
+      <div className="w-full max-w-full sm:flex-1 sm:min-w-[120px] sm:max-w-none md:max-w-none lg:max-w-[180px]">
         <SelectPrimitive.Root value={type} onValueChange={handleTypeChange}>
           {/*
           aria-label is used to make the filter accessible 
@@ -168,7 +168,7 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
       </div>
       
       {/* Region filter */}
-      <div className="flex-1 min-w-[120px] max-w-[180px]">
+      <div className="w-full max-w-full sm:flex-1 sm:min-w-[120px] sm:max-w-none md:max-w-none lg:max-w-[180px]">
         <SelectPrimitive.Root value={region} onValueChange={handleRegionChange}>
           <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label="Region filter">
             <SelectPrimitive.Value placeholder="Région" />
@@ -203,7 +203,7 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
       </div>
       
       {/* Period filter */}
-      <div className="flex-1 min-w-[120px] max-w-[180px]">
+      <div className="w-full max-w-full sm:flex-1 sm:min-w-[120px] sm:max-w-none md:max-w-none lg:max-w-[180px]">
         <SelectPrimitive.Root value={period} onValueChange={handlePeriodChange}>
           <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label="Period filter">
             <SelectPrimitive.Value placeholder="Période" />
