@@ -28,7 +28,7 @@ export default async function Home({
 return (
   <main className="max-w-[1400px] mx-auto px-6 py-12 min-h-screen animate-fade-in">
       {/* Hero Section */}
-      <div className="flex flex-col lg:flex-row gap-16 items-center mb-24">
+      <div className="flex flex-col lg:flex-row gap-16 items-center mb-12">
         {/* Left side - Image */}
         <div className="lg:w-1/2 relative">
           <div className="aspect-square overflow-hidden rounded-full">
@@ -60,7 +60,7 @@ return (
       </div>
 
       {/* Opening Hours Section */}
-      <div className="border-t border-gray-200 pt-16">
+      <div className="border-t border-gray-200 pt-8">
         <div className="max-w-2xl mx-auto text-center space-y-6">
           <h2 className="text-2xl font-light uppercase tracking-wider mb-8">{t["home.hours.1"]}</h2>
           <div className="space-y-3 text-lg text-gray-800">
