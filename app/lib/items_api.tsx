@@ -25,22 +25,3 @@ export interface ArtItem {
   images: ImageData[];
   slug: string;
 }
-
-// TODO interface to store all the items for the Grid/Collection page
-interface PaginatedApiResponse {
-  data: ArtItem[];
-  meta: {
-    pagination: {
-      page: number;      // Current page
-      pageSize: number;  // Items per page
-      pageCount: number; // Total number of pages
-      total: number;     // Total number of items
-    };
-  };
-}
-
-interface FilterParams {
-  type?: string;
-  region?: string;
-  period?: string;
-}
