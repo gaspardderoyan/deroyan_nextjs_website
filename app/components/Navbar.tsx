@@ -24,7 +24,7 @@ export async function Navbar({
   const validLocale = validateLocale(locale);
 
   return (
-    <nav className="flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 lg:px-6 py-3 lg:py-4 bg-[#EAE8DA] border-b border-black relative">
+    <nav className="sticky top-0 z-50 flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 lg:px-6 py-0 lg:py-0 bg-[#EAE8DA] border-b border-black relative">
       {/* First row on mobile: Logo and Language Toggle */}
       <div className="flex justify-between items-center w-full py-3 lg:py-0 min-h-[60px] lg:min-h-[80px] lg:w-auto">
         {/* Logo */}
