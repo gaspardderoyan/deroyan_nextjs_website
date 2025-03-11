@@ -13,7 +13,7 @@ import { HeroImage } from "../components/HeroImage";
 export default async function Home({
   params
 }: {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }) {
   const { locale } = await params;
   const validLocale = validateLocale(locale);

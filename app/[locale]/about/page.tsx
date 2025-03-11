@@ -4,7 +4,7 @@ import translations from '@/app/lib/translations.json';
 export default async function AboutPage({
   params
 }: {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }) {
   // Get the locale from params and validate it
   const { locale } = await params;

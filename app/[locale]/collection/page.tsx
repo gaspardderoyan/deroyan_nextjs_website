@@ -14,7 +14,7 @@ export default async function Items({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
   // this promise resolves to an object that can have any number of keys, each a string,
   // and each key's value can be a string, or an array of strings, or undefined
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
   // Get page, pageSize, and filter parameters from URL query parameters or use defaults
   // In Next.js 14/15, searchParams is a Promise that must be awaited
