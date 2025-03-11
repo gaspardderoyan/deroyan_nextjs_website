@@ -1,8 +1,11 @@
 import { fetchItem, getFullImageUrl } from "../lib/api";
 import { validateLocale } from "../lib/i18n";
 import translations from "../lib/translations.json";
-import Image from "next/image";
 import Link from "next/link";
+
+// Import the client component for image loading
+import { HeroImage } from "../components/HeroImage";
+
 /**
  * Home page component that displays content based on the current locale
  * @param params - Contains the locale from the dynamic route segment
@@ -32,13 +35,8 @@ return (
         {/* Left side - Image */}
         <div className="lg:w-1/2 relative">
           <div className="aspect-square overflow-hidden rounded-full">
-            <Image
-              src={imageUrl}
-              alt="Damien Hirst"
-              width={1000}
-              height={1000}
-              className="w-full h-full object-cover"
-            />
+            {/* Replace the static Image with the client-side HeroImage component */}
+            <HeroImage imageUrl={imageUrl} alt="Damien Hirst" />
           </div>
         </div>
         
