@@ -1,5 +1,7 @@
 import { validateLocale  } from "@/app/lib/i18n";
 import translations from "@/app/lib/translations.json";
+import EmailLinkWrapper from './EmailLinkWrapper';
+
 /**
  * Footer component that displays contact information and copyright details
  * Responsive design: 
@@ -35,7 +37,8 @@ export default async function Footer({
               <a href="tel:+33148000785" className="underline decoration-black hover:text-gray-700 transition-colors">01.48.00.07.85</a>
             </p>
             <p className="text-xs sm:text-sm md:text-base">
-               <a href="mailto:galeriederoyan@gmail.com" className="underline decoration-black hover:text-gray-700 transition-colors">galeriederoyan@gmail.com</a>
+               {/* Using a wrapper component that properly handles the client component boundary */}
+               <EmailLinkWrapper />
             </p>
           </div>
           

@@ -34,17 +34,32 @@ const nextConfig = {
         return [
             {
                 source: '/tapis',
-                destination: '/collection?filters[type][$eq]=carpet',
+                destination: '/fr/collection?filters[type][$eq]=carpet',
                 permanent: true,
             },
             {
                 source: '/tapisseries',
-                destination: '/collection?filters[type][$eq]=tapestry',
+                destination: '/fr/collection?filters[type][$eq]=tapestry',
                 permanent: true,
             },
             {
                 source: '/autres-textiles',
-                destination: '/collection?filters[type][$eq]=textiles',
+                destination: '/fr/collection?filters[type][$eq]=textile',
+                permanent: true,
+            },
+            {
+                source: '/en/carpets',
+                destination: '/en/collection?filters[type][$eq]=carpet',
+                permanent: true,
+            },
+            {
+                source: '/en/tapestries',
+                destination: '/en/collection?filters[type][$eq]=tapestry',
+                permanent: true,
+            },
+            {
+                source: '/en/textiles',
+                destination: '/en/collection?filters[type][$eq]=textile',
                 permanent: true,
             },
             // TODO: add redirects for the english(en) versions of the pages
