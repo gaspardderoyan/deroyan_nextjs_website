@@ -20,7 +20,7 @@ export default async function Footer({
   const validLocale = validateLocale(locale);
 
   return (
-    <footer className="bg-[#EAE8DA] border-t border-black py-6 px-4 sm:px-6 mt-auto">
+    <footer className="bg-[#EAE8DA] border-t border-black py-3 px-4 sm:px-6 mt-auto">
       <div className="container mx-auto">
         {/* 
           Responsive layout container:

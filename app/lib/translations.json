@@ -1,0 +1,22 @@
+{
+  "en": {
+    "home.1": "Located in Paris, a few steps from the Hôtel Drouot, Armand Deroyan Gallery specializes in selling and buying carpets, tapestries and old textiles.",
+    "home.2": "It offers a wide range of Oriental carpets ― persian, ottoman, chinese … ― European carpets ― Savonnerie, Aubusson, Axminster, Arraiolos ... ― as well as antique tapestries ― Flanders, Beauvais, Gobelins, Aubusson ... ― and contemporary ones ― Delaunay, Picasso, Miró, Lurçat ... ―.",
+    "home.3": "The largest set of Art Deco carpets in the world ― Da Silva Bruhns, Ruhlmann, Leleu ... ― finest embroideries and needlepoint carpets complete the collection. The Gallery customers are art collectors, decorators and museums (Ecouen, Aubusson, Metropolitan ...).",
+    "home.hours.1": "Opening hours",
+    "home.hours.2": "Monday to Friday",
+    "home.hours.3": "10:30am to 1pm",
+    "home.hours.4": "1pm to 6pm",
+    "home.hours.5": "Closed on Saturday, by appointment only"
+  },
+  "fr": {
+    "home.1": "Située à Paris, au cœur du quartier Drouot, la galerie Armand Deroyan est spécialisée dans la vente et l'achat de tapis, tapisseries et textiles anciens.",
+    "home.2": "Elle propose un large choix de tapis d'Orient ― persans, ottomans, chinois...― et européens ― Savonneries, Aubusson, Axminster, Arrailos...― ainsi que des tapisseries anciennes ― Flandres, Beauvais, Gobelins, Aubusson...― et contemporaines ― Delaunay, Picasso, Miró, Lurçat...―.",
+    "home.3": "Le plus grand ensemble de tapis Art Déco visible ― Da Silva Bruhns, Ruhlmann, Leleu …― de fines broderies et tapis au point viennent compléter la collection. La clientèle de la galerie se compose de collectionneurs, décorateurs et musées (Ecouen, Aubusson, Metropolitan de New-York...).",
+    "home.hours.1": "Horaires d'ouverture",
+    "home.hours.2": "Lundi au vendredi",
+    "home.hours.3": "10:30 à 13:00",
+    "home.hours.4": "13:00 à 18:00",
+    "home.hours.5": "Fermé le samedi, par rendez-vous uniquement"
+  }
+}
