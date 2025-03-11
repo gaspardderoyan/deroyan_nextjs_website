@@ -7,7 +7,7 @@ export default async function AboutPage({
   params: { locale: string }
 }) {
   // Get the locale from params and validate it
-  const { locale } = params;
+  const { locale } = await params;
   const validLocale = validateLocale(locale);
   
   // Get translations for the validated locale
@@ -24,13 +24,13 @@ export default async function AboutPage({
         
         {/* Timeline */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-[#F0EFE5] p-4 rounded-lg">
+          <div className="border border-black p-4">
             <p className="font-medium">{t["bio.timeline.1"]}</p>
           </div>
-          <div className="bg-[#F0EFE5] p-4 rounded-lg">
+          <div className="border border-black p-4">
             <p className="font-medium">{t["bio.timeline.2"]}</p>
           </div>
-          <div className="bg-[#F0EFE5] p-4 rounded-lg">
+          <div className="border border-black p-4">
             <p className="font-medium">{t["bio.timeline.3"]}</p>
           </div>
         </div>
@@ -51,19 +51,19 @@ export default async function AboutPage({
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Restoration */}
-          <div className="bg-[#F0EFE5] p-6 rounded-lg shadow-sm">
+          <div className="border border-black p-6 shadow-sm">
             <h3 className="text-xl font-medium mb-4">{t["restoration.section.1.title"]}</h3>
             <p className="text-gray-800">{t["restoration.section.1.content"]}</p>
           </div>
           
           {/* ATC Workshop */}
-          <div className="bg-[#F0EFE5] p-6 rounded-lg shadow-sm">
+          <div className="border border-black p-6 shadow-sm">
             <h3 className="text-xl font-medium mb-4">{t["restoration.section.2.title"]}</h3>
             <p className="text-gray-800">{t["restoration.section.2.content"]}</p>
           </div>
           
           {/* Creation */}
-          <div className="bg-[#F0EFE5] p-6 rounded-lg shadow-sm">
+          <div className="border border-black p-6 shadow-sm">
             <h3 className="text-xl font-medium mb-4">{t["restoration.section.3.title"]}</h3>
             <p className="text-gray-800">{t["restoration.section.3.content"]}</p>
           </div>
