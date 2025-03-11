@@ -13,7 +13,7 @@ const libreBaskerville = Libre_Baskerville({
 
 export const metadata: Metadata = {
   title: "Galerie Deroyan",
-  // TODO: make this based on the locale
+  // TODO: make this based on the locale, and fetch from translations json
   description: "Galerie Deroyan, une galerie de tapis et textiles d'art ancien.",
 };
 export default async function RootLayout({

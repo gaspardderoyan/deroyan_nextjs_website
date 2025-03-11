@@ -1,13 +1,12 @@
 "use client";
 
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 // Import select components directly from shadcn/ui
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
-import { LocalizedTranslations } from "@/app/lib/UI_api";
-import { locales } from "@/middleware";
-
+import translations from "@/app/lib/translations.json";
+import { validateLocale } from "../lib/i18n";
 
 // Define all filter options in a single object 
 // Each category has its own array of options
@@ -55,21 +54,15 @@ const SELECT_ITEM_STYLES = "relative flex w-full cursor-default select-none item
  * Filters component for filtering the collection by type, region, and period
  * Maintains filter state in URL parameters for shareable links and browser history
  */
-export default function Filters({ LocalizedTranslationsWithLocale }: { LocalizedTranslationsWithLocale: LocalizedTranslations[string] }) {
+export default function Filters({ locale }: { locale: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const pathname = usePathname();
 
-  // Extract the current locale from the pathname
-  const getCurrentLocale = useCallback(() => {
-    // The pathname format is /{locale}/rest/of/path
-    const firstSegment = pathname.split('/')[1];
-    return locales.includes(firstSegment) ? firstSegment : 'en';
-  }, [pathname]);
+  // Ensure we use a valid locale
+  const validLocale = validateLocale(locale);
   
-  const currentLocale = getCurrentLocale();
-
-  const localizedTranslations = LocalizedTranslationsWithLocale;
+  // Get translations for the current locale
+  const t = translations[validLocale as keyof typeof translations];
   
   // Get current filter values from URL or use 'all' as default
   const [type, setType] = useState(searchParams.get("filters[type][$eq]") || "all");
@@ -98,9 +91,9 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
       }
       
       // Update the URL with the new search parameters, including the locale
-      router.push(`/${currentLocale}/collection?${params.toString()}`);
+      router.push(`/${validLocale}/collection?${params.toString()}`);
     },
-    [router, searchParams, currentLocale]
+    [router, searchParams, validLocale]
   );
   
   // Handle filter changes
@@ -131,12 +124,8 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
       {/* Type filter */}
       <div className="w-full max-w-full sm:flex-1 sm:min-w-[120px] sm:max-w-none md:max-w-none lg:max-w-[180px]">
         <SelectPrimitive.Root value={type} onValueChange={handleTypeChange}>
-          {/*
-          aria-label is used to make the filter accessible 
-          TODO: make the label localizable, for this one and the other filters
-          */}
-          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label="Type filter">
-            <SelectPrimitive.Value placeholder="Type" />
+          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label={t["filter.type"]}>
+            <SelectPrimitive.Value placeholder={t["filter.type"]} />
             <SelectPrimitive.Icon asChild>
               <ChevronDown className="h-4 w-4 opacity-50" />
             </SelectPrimitive.Icon>
@@ -144,7 +133,6 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
           <SelectPrimitive.Portal>
             <SelectPrimitive.Content className={SELECT_CONTENT_STYLES} position="popper">
               <SelectPrimitive.Viewport className={SELECT_VIEWPORT_STYLES}>
-                {/* Map directly through string array, using each value as both key and filter value */}
                 {filterOptions.type.map((value) => (
                   <SelectPrimitive.Item 
                     key={value} 
@@ -157,7 +145,7 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
                       </SelectPrimitive.ItemIndicator>
                     </span>
                     <SelectPrimitive.ItemText>
-                      {localizedTranslations[`filter.type.${value}`].value}
+                      {value === "all" ? t["filter.type"] : t[`filter.type.${value}` as keyof typeof t]}
                     </SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
@@ -170,8 +158,8 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
       {/* Region filter */}
       <div className="w-full max-w-full sm:flex-1 sm:min-w-[120px] sm:max-w-none md:max-w-none lg:max-w-[180px]">
         <SelectPrimitive.Root value={region} onValueChange={handleRegionChange}>
-          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label="Region filter">
-            <SelectPrimitive.Value placeholder="Région" />
+          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label={t["filter.region"]}>
+            <SelectPrimitive.Value placeholder={t["filter.region"]} />
             <SelectPrimitive.Icon asChild>
               <ChevronDown className="h-4 w-4 opacity-50" />
             </SelectPrimitive.Icon>
@@ -179,7 +167,6 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
           <SelectPrimitive.Portal>
             <SelectPrimitive.Content className={SELECT_CONTENT_STYLES} position="popper">
               <SelectPrimitive.Viewport className={SELECT_VIEWPORT_STYLES}>
-                {/* Map directly through string array, using each value as both key and filter value */}
                 {filterOptions.region.map((value) => (
                   <SelectPrimitive.Item 
                     key={value} 
@@ -192,7 +179,7 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
                       </SelectPrimitive.ItemIndicator>
                     </span>
                     <SelectPrimitive.ItemText>
-                      {localizedTranslations[`filter.region.${value}`].value}
+                      {value === "all" ? t["filter.region"] : t[`filter.region.${value}` as keyof typeof t]}
                     </SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}
@@ -205,8 +192,8 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
       {/* Period filter */}
       <div className="w-full max-w-full sm:flex-1 sm:min-w-[120px] sm:max-w-none md:max-w-none lg:max-w-[180px]">
         <SelectPrimitive.Root value={period} onValueChange={handlePeriodChange}>
-          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label="Period filter">
-            <SelectPrimitive.Value placeholder="Période" />
+          <SelectPrimitive.Trigger className={SELECT_TRIGGER_STYLES} aria-label={t["filter.period"]}>
+            <SelectPrimitive.Value placeholder={t["filter.period"]} />
             <SelectPrimitive.Icon asChild>
               <ChevronDown className="h-4 w-4 opacity-50" />
             </SelectPrimitive.Icon>
@@ -214,7 +201,6 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
           <SelectPrimitive.Portal>
             <SelectPrimitive.Content className={SELECT_CONTENT_STYLES} position="popper">
               <SelectPrimitive.Viewport className={SELECT_VIEWPORT_STYLES}>
-                {/* Map directly through string array, using each value as both key and filter value */}
                 {filterOptions.period.map((value) => (
                   <SelectPrimitive.Item 
                     key={value} 
@@ -227,7 +213,7 @@ export default function Filters({ LocalizedTranslationsWithLocale }: { Localized
                       </SelectPrimitive.ItemIndicator>
                     </span>
                     <SelectPrimitive.ItemText>
-                      {localizedTranslations[`filter.period.${value}`].value}
+                      {value === "all" ? t["filter.period"] : t[`filter.period.${value}` as keyof typeof t]}
                     </SelectPrimitive.ItemText>
                   </SelectPrimitive.Item>
                 ))}

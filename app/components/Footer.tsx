@@ -1,6 +1,5 @@
-import { getLocalizedTranslations, LocalizedTranslations } from "@/app/lib/UI_api";
 import { validateLocale  } from "@/app/lib/i18n";
-
+import translations from "@/app/lib/translations.json";
 /**
  * Footer component that displays contact information and copyright details
  * Responsive design: 
@@ -12,12 +11,12 @@ export default async function Footer({
 }: {
   params: { locale: string }
 }) {  
-  // Fetch the UI elements text for localization
-  const data: LocalizedTranslations = await getLocalizedTranslations();
   const { locale } = params;
 
   // Ensure we use a valid locale for text content
   const validLocale = validateLocale(locale);
+
+  const t = translations[validLocale as keyof typeof translations];
 
   return (
     <footer className="bg-[#EAE8DA] border-t border-black py-3 px-4 sm:px-6 mt-auto">
@@ -43,7 +42,7 @@ export default async function Footer({
           {/* Copyright and credits section */}
           <div className="text-xs sm:text-sm md:text-base text-right">
             <p className="mb-1">Deroyan 2025 ©</p>
-            <p className="mb-1">{data[validLocale]['footer.rights'].value}</p>
+            <p className="mb-1">{t['footer.rights']}</p>
             <p className="mb-1">Gaspard Deroyan</p>
           </div>
         </div>

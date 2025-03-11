@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getLocalizedTranslations, LocalizedTranslations } from '@/app/lib/UI_api';
 import LanguageToggle from './LanguageToggle';
 import { validateLocale } from '@/app/lib/i18n';
 import { Suspense } from 'react';
@@ -17,7 +16,6 @@ export async function Navbar({
   params: { locale: string }
 }) {
   // Fetch UI elements at build time
-  const data: LocalizedTranslations = await getLocalizedTranslations();
   const { locale } = await params;
 
   // ensure we use a valid locale
@@ -58,10 +56,10 @@ export async function Navbar({
             {t['navbar.home']}
           </Link>
           <Link href={`/${validLocale}/collection`} className="text-gray-800 hover:text-gray-600 transition-colors text-base font-medium lg:text-base lg:font-normal">
-            {data[validLocale]['navbar.collection'].value}
+            {t['navbar.collection']}
           </Link>
           <Link href={`/${validLocale}/about`} className="text-gray-800 hover:text-gray-600 transition-colors text-base font-medium lg:text-base lg:font-normal">
-            {data[validLocale]['navbar.about'].value}
+            {t['navbar.about']}
           </Link>
         </div>
         

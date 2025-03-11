@@ -4,7 +4,6 @@ import Pagination from '@/app/components/Pagination';
 import ItemGrid from '@/app/components/ItemGrid';
 import Filters from '@/app/components/Filters';
 import { fetchItems } from '@/app/lib/api';
-import { getLocalizedTranslations, LocalizedTranslations } from '@/app/lib/UI_api';
 import { validateLocale } from '@/app/lib/i18n';
 
 // The Items component that displays a grid of items with pagination
@@ -55,8 +54,6 @@ export default async function Items({
   const { pagination } = result.meta;
   const totalPages = pagination.pageCount;
 
-  // fetch the UI elements text
-  const data: LocalizedTranslations = await getLocalizedTranslations();
 
   // Define localized text based on the validLocale
   const collectionTitle = validLocale === 'en' ? 'Our Collection' : 'Notre collection';
@@ -83,7 +80,7 @@ export default async function Items({
           {/* Filters - full width on mobile/tablet, aligned right on desktop */}
           <div className="w-full lg:w-auto">
             {/* Filters component */}
-            <Filters LocalizedTranslationsWithLocale={data[validLocale]} />
+            <Filters locale={validLocale} />
           </div>
         </div>
       </div>
@@ -97,7 +94,6 @@ export default async function Items({
         totalPages={totalPages} 
         pageSize={currentPageSize} 
         basePath={`/${validLocale}/collection`}
-        LocalizedTranslationsWithLocale={data[validLocale]}
       />
     </div>
   );
