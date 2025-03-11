@@ -3,7 +3,6 @@
 const nextConfig = {
     /* config options here */
     images: {
-        domains: ['localhost', 'your-production-api-domain.com'],
         remotePatterns: [
             {
                 protocol: 'http',
@@ -13,7 +12,7 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: 'your-production-api-domain.com',
+                hostname: '**',
                 port: '',
                 pathname: '/**',
             },
