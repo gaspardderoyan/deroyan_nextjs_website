@@ -1,5 +1,5 @@
-import { validateLocale } from '../../lib/i18n';
-import translations from '../../lib/translations.json';
+import { validateLocale } from '@/app/lib/i18n';
+import translations from '@/app/lib/translations.json';
 
 export default async function AboutPage({
   params

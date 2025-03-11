@@ -4,7 +4,7 @@ import { getLocalizedTranslations, LocalizedTranslations } from '@/app/lib/UI_ap
 import LanguageToggle from './LanguageToggle';
 import { validateLocale } from '@/app/lib/i18n';
 import { Suspense } from 'react';
-
+import translations from '@/app/lib/translations.json';
 /**
  * Navbar component that displays the site navigation
  * Uses dynamic UI elements fetched at build time
@@ -22,6 +22,8 @@ export async function Navbar({
 
   // ensure we use a valid locale
   const validLocale = validateLocale(locale);
+
+  const t = translations[validLocale as keyof typeof translations];
 
   return (
     <nav className="sticky top-0 z-50 flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 lg:px-6 py-0 lg:py-0 bg-[#EAE8DA] border-b border-black relative">
@@ -52,6 +54,9 @@ export async function Navbar({
       <div className="flex justify-center lg:justify-end items-center w-full py-3 lg:py-0">
         {/* Navigation links - centered on mobile, right-aligned on desktop */}
         <div className="flex items-center space-x-5 lg:space-x-8">
+          <Link href={`/${validLocale}`} className="text-gray-800 hover:text-gray-600 transition-colors text-base font-medium lg:text-base lg:font-normal">
+            {t['navbar.home']}
+          </Link>
           <Link href={`/${validLocale}/collection`} className="text-gray-800 hover:text-gray-600 transition-colors text-base font-medium lg:text-base lg:font-normal">
             {data[validLocale]['navbar.collection'].value}
           </Link>
