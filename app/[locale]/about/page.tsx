@@ -24,13 +24,13 @@ export default async function AboutPage({
         
         {/* Timeline */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-gray-100 p-4 rounded-lg">
+          <div className="bg-[#F0EFE5] p-4 rounded-lg">
             <p className="font-medium">{t["bio.timeline.1"]}</p>
           </div>
-          <div className="bg-gray-100 p-4 rounded-lg">
+          <div className="bg-[#F0EFE5] p-4 rounded-lg">
             <p className="font-medium">{t["bio.timeline.2"]}</p>
           </div>
-          <div className="bg-gray-100 p-4 rounded-lg">
+          <div className="bg-[#F0EFE5] p-4 rounded-lg">
             <p className="font-medium">{t["bio.timeline.3"]}</p>
           </div>
         </div>
@@ -43,11 +43,6 @@ export default async function AboutPage({
           <p className="text-lg leading-relaxed text-gray-800">{t["bio.paragraph.4"]}</p>
           <p className="text-lg leading-relaxed text-gray-800">{t["bio.paragraph.5"]}</p>
         </div>
-        
-        {/* Gallery Hours */}
-        <div className="mt-8 p-6 bg-gray-100 rounded-lg">
-          <p className="text-lg font-medium">{t["bio.hours"]}</p>
-        </div>
       </div>
       
       {/* Restoration & Conservation Section */}
@@ -56,19 +51,19 @@ export default async function AboutPage({
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Restoration */}
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="bg-[#F0EFE5] p-6 rounded-lg shadow-sm">
             <h3 className="text-xl font-medium mb-4">{t["restoration.section.1.title"]}</h3>
             <p className="text-gray-800">{t["restoration.section.1.content"]}</p>
           </div>
           
           {/* ATC Workshop */}
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="bg-[#F0EFE5] p-6 rounded-lg shadow-sm">
             <h3 className="text-xl font-medium mb-4">{t["restoration.section.2.title"]}</h3>
             <p className="text-gray-800">{t["restoration.section.2.content"]}</p>
           </div>
           
           {/* Creation */}
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="bg-[#F0EFE5] p-6 rounded-lg shadow-sm">
             <h3 className="text-xl font-medium mb-4">{t["restoration.section.3.title"]}</h3>
             <p className="text-gray-800">{t["restoration.section.3.content"]}</p>
           </div>
