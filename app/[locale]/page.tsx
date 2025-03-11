@@ -50,12 +50,14 @@ return (
             <p className="text-lg leading-relaxed text-gray-800">{t["home.3"]}</p>
           </div>
 
-          <Link 
-            href={`/${validLocale}/collection`}
-            className="inline-block px-8 py-3 bg-[#1a1a1a] text-white rounded hover:bg-[#333333] transition-colors duration-300"
-          >
-            {validLocale === 'en' ? 'Explore Collection' : 'Explorer la Collection'}
-          </Link>
+          <div className="flex justify-center">
+            <Link 
+              href={`/${validLocale}/collection`}
+              className="inline-block px-8 py-3 bg-[#1a1a1a] text-white rounded hover:bg-[#333333] transition-colors duration-300"
+            >
+              {validLocale === 'en' ? 'Explore Collection' : 'Explorer la Collection'}
+            </Link>
+          </div>
         </div>
       </div>
 
