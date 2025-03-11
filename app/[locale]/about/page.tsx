@@ -1,102 +1,79 @@
-import { getUIElements } from '@/app/lib/api';
+import { validateLocale } from '../../lib/i18n';
+import translations from '../../lib/translations.json';
 
-/**
- * About page component
- * Displays information about the gallery, its history, and mission
- */
-export default async function AboutPage() {
-  // Fetch UI elements at build time (could be expanded to include about page content)
-  const uiElements = await getUIElements('fr');
+export default async function AboutPage({
+  params
+}: {
+  params: { locale: string }
+}) {
+  // Get the locale from params and validate it
+  const { locale } = params;
+  const validLocale = validateLocale(locale);
   
-  // Use the fetched value or fallback to a default
-  const aboutTitle = uiElements['about.title'] || 'Failed to fetch';
-  
+  // Get translations for the validated locale
+  const t = translations[validLocale as keyof typeof translations];
+
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">{aboutTitle}</h1>
+    <main className="max-w-[1400px] mx-auto px-6 py-12 min-h-screen animate-fade-in">
+      {/* Page Title */}
+      <h1 className="text-4xl font-bold mb-12 text-center">{t["bio.page_title"]}</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Left column: Text content */}
-        <div className="space-y-6">
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">Notre Histoire</h2>
-            <p className="mb-4">
-              Fondée en 1985 par Jean-Claude Papazian, notre galerie s&apos;est établie comme une référence 
-              dans le domaine des tapis et textiles d&apos;art ancien. Avec plus de 35 ans d&apos;expérience, 
-              nous avons développé une expertise unique dans la sélection et la présentation de pièces 
-              exceptionnelles provenant du monde entier.
-            </p>
-            <p>
-              Notre passion pour l&apos;artisanat traditionnel et l&apos;histoire des textiles nous a amenés 
-              à constituer une collection remarquable, témoignant de la richesse culturelle et artistique 
-              de différentes régions du monde.
-            </p>
-          </section>
-          
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">Notre Mission</h2>
-            <p className="mb-4">
-              Notre mission est de préserver et de partager le patrimoine textile mondial en proposant 
-              des pièces authentiques et de grande qualité. Nous nous efforçons de sensibiliser le public 
-              à la valeur culturelle et artistique des tapis et textiles anciens.
-            </p>
-            <p>
-              Chaque pièce de notre collection est soigneusement sélectionnée pour son intérêt historique, 
-              sa qualité technique et sa beauté esthétique. Nous accordons une attention particulière à 
-              l&apos;authenticité et à la provenance de nos œuvres.
-            </p>
-          </section>
-          
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">Notre Expertise</h2>
-            <p>
-              Notre équipe de spécialistes possède une connaissance approfondie des techniques de tissage, 
-              des motifs traditionnels et de l&apos;histoire des textiles. Nous offrons des conseils personnalisés 
-              aux collectionneurs, aux institutions et aux amateurs d&apos;art, et nous partageons volontiers 
-              notre savoir avec tous ceux qui s&apos;intéressent à ce domaine fascinant.
-            </p>
-          </section>
+      {/* Biography Section */}
+      <div className="mb-16">
+        <h2 className="text-3xl font-semibold mb-6">{t["bio.title"]}</h2>
+        
+        {/* Timeline */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="bg-gray-100 p-4 rounded-lg">
+            <p className="font-medium">{t["bio.timeline.1"]}</p>
+          </div>
+          <div className="bg-gray-100 p-4 rounded-lg">
+            <p className="font-medium">{t["bio.timeline.2"]}</p>
+          </div>
+          <div className="bg-gray-100 p-4 rounded-lg">
+            <p className="font-medium">{t["bio.timeline.3"]}</p>
+          </div>
         </div>
         
-        {/* Right column: Images */}
-        <div className="space-y-8">
-          {/* Image placeholders - replace with actual images when available */}
-          <div className="relative h-80 w-full bg-gray-200 rounded-lg flex items-center justify-center">
-            <p className="text-gray-500 text-center p-4">
-              Image de la galerie<br />
-              <span className="text-sm">(Remplacez par une image réelle à /public/images/gallery-interior.jpg)</span>
-            </p>
-          </div>
-          
-          <div className="relative h-80 w-full bg-gray-200 rounded-lg flex items-center justify-center">
-            <p className="text-gray-500 text-center p-4">
-              Image du fondateur<br />
-              <span className="text-sm">(Remplacez par une image réelle à /public/images/founder.jpg)</span>
-            </p>
-          </div>
+        {/* Biography Paragraphs */}
+        <div className="space-y-6">
+          <p className="text-lg leading-relaxed text-gray-800">{t["bio.paragraph.1"]}</p>
+          <p className="text-lg leading-relaxed text-gray-800">{t["bio.paragraph.2"]}</p>
+          <p className="text-lg leading-relaxed text-gray-800">{t["bio.paragraph.3"]}</p>
+          <p className="text-lg leading-relaxed text-gray-800">{t["bio.paragraph.4"]}</p>
+          <p className="text-lg leading-relaxed text-gray-800">{t["bio.paragraph.5"]}</p>
+        </div>
+        
+        {/* Gallery Hours */}
+        <div className="mt-8 p-6 bg-gray-100 rounded-lg">
+          <p className="text-lg font-medium">{t["bio.hours"]}</p>
         </div>
       </div>
       
-      {/* Full width section */}
-      <section className="mt-16">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Visitez Notre Galerie</h2>
-        <p className="text-center max-w-3xl mx-auto mb-8">
-          Nous vous invitons à découvrir notre collection en personne. Notre espace d&apos;exposition 
-          vous permet d&apos;apprécier pleinement la beauté et les détails de nos pièces dans un 
-          cadre élégant et accueillant.
-        </p>
+      {/* Restoration & Conservation Section */}
+      <div>
+        <h2 className="text-3xl font-semibold mb-6">{t["restoration.title"]}</h2>
         
-        <div className="bg-gray-100 p-8 rounded-lg">
-          <h3 className="text-xl font-medium mb-4 text-center">Horaires d&apos;ouverture</h3>
-          <div className="flex justify-center">
-            <ul className="space-y-2">
-              <li><span className="font-medium">Mardi - Vendredi:</span> 10h - 18h</li>
-              <li><span className="font-medium">Samedi:</span> 11h - 17h</li>
-              <li><span className="font-medium">Dimanche - Lundi:</span> Fermé</li>
-            </ul>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Restoration */}
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h3 className="text-xl font-medium mb-4">{t["restoration.section.1.title"]}</h3>
+            <p className="text-gray-800">{t["restoration.section.1.content"]}</p>
+          </div>
+          
+          {/* ATC Workshop */}
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h3 className="text-xl font-medium mb-4">{t["restoration.section.2.title"]}</h3>
+            <p className="text-gray-800">{t["restoration.section.2.content"]}</p>
+          </div>
+          
+          {/* Creation */}
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h3 className="text-xl font-medium mb-4">{t["restoration.section.3.title"]}</h3>
+            <p className="text-gray-800">{t["restoration.section.3.content"]}</p>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </main>
   );
 } 

@@ -58,9 +58,6 @@ export async function Navbar({
           <Link href={`/${validLocale}/about`} className="text-gray-800 hover:text-gray-600 transition-colors text-base font-medium lg:text-base lg:font-normal">
             {data[validLocale]['navbar.about'].value}
           </Link>
-          <Link href={`/${validLocale}/contact`} className="text-gray-800 hover:text-gray-600 transition-colors text-base font-medium lg:text-base lg:font-normal">
-            {data[validLocale]['navbar.contact'].value}
-          </Link>
         </div>
         
         {/* Language toggle on desktop - positioned next to nav links */}
